@@ -23,7 +23,7 @@ This project follows a strict separation between Game Logic (C#) and Presentatio
 ## 🚀 Getting Started
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/YourUsername/YoshigenShift.Po5.git
+   git clone https://github.com/YourUsername/YojigenShift.Po5.git
 
 2. **Restore NuGet Packages**: The project depends on `YiFramework`. Ensure you have the NuGet CLI or use IDE integration to restore dependencies.
 
