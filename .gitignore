@@ -14,3 +14,17 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# .NET/C# specific ignores
+bin/
+obj/
+*.sln
+*.csproj
+*.user
+.vs/
+.vscode/
+
+# Mobile export artifacts
+*.apk
+*.aab
+*.ipa
