@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dlkj328x5fa60"]
+
+[ext_resource type="Script" uid="uid://bbfq1rwhv4l8e" path="res://scripts/Nodes/BallNode.cs" id="1_le6ns"]
+[ext_resource type="Texture2D" uid="uid://c12bi37gcehpt" path="res://icon.svg" id="2_86arq"]
+[ext_resource type="Resource" uid="uid://d3ty7t1uhbwpj" path="res://assets/resources/DefaultElemTheme.tres" id="2_ntsuf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ntsuf"]
+radius = 30.675724
+
+[node name="Ball" type="RigidBody2D" unique_id=699335819]
+script = ExtResource("1_le6ns")
+Theme = ExtResource("2_ntsuf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1698127175]
+shape = SubResource("CircleShape2D_ntsuf")
+
+[node name="Visuals" type="Node2D" parent="." unique_id=359541271]
+
+[node name="BaseColor" type="Sprite2D" parent="Visuals" unique_id=934366987]
+
+[node name="InkIcon" type="Sprite2D" parent="Visuals" unique_id=677289001]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_86arq")
+
+[node name="GlassShell" type="Sprite2D" parent="Visuals" unique_id=2106656577]
+
+[node name="Label" type="Label" parent="." unique_id=1721420312]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
