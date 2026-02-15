@@ -11,12 +11,30 @@ config_version=5
 [application]
 
 config/name="Client"
-config/features=PackedStringArray("4.6", "Mobile")
+config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+YiBridge="*uid://byfgdeub7vidq"
+GameManager="*uid://c0y5eoilgp5al"
+AudioManager="*uid://36xf4ij06rsf"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_width"
+window/handheld/orientation=1
 
 [dotnet]
 
 project/assembly_name="Client"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [physics]
 

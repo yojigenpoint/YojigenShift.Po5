@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://csm6l6o88i8e6"]
+
+[ext_resource type="PackedScene" uid="uid://dlkj328x5fa60" path="res://scenes/Prefabs/Ball.tscn" id="1_b4etn"]
+[ext_resource type="Script" uid="uid://1e2qnsmgphkf" path="res://scripts/Nodes/StageController.cs" id="1_ce2sw"]
+[ext_resource type="PackedScene" uid="uid://c6hncky2ue68o" path="res://scenes/UI/HUD.tscn" id="3_kgtrg"]
+[ext_resource type="Script" uid="uid://c8d4d5uonwyas" path="res://scripts/Nodes/DeadlineNode.cs" id="4_3mx00"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ce2sw"]
+size = Vector2(3.5, 1891)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgtrg"]
+size = Vector2(3, 1896)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3mx00"]
+size = Vector2(1080, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c37fm"]
+size = Vector2(1077, 229.5)
+
+[node name="GameStage" type="Node2D" unique_id=238200124 node_paths=PackedStringArray("PathContainer")]
+script = ExtResource("1_ce2sw")
+BallPrefab = ExtResource("1_b4etn")
+PathContainer = NodePath("WallContainer")
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=1348307900]
+
+[node name="BG_Image" type="TextureRect" parent="Background" unique_id=1975713943]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WallContainer" type="StaticBody2D" parent="." unique_id=1519674388]
+
+[node name="Left" type="CollisionShape2D" parent="WallContainer" unique_id=1628805284]
+position = Vector2(-2.25, 935.5)
+shape = SubResource("RectangleShape2D_ce2sw")
+
+[node name="Right" type="CollisionShape2D" parent="WallContainer" unique_id=1721943902]
+position = Vector2(1067.5, 938)
+shape = SubResource("RectangleShape2D_kgtrg")
+
+[node name="Bottom" type="CollisionShape2D" parent="WallContainer" unique_id=2058373684]
+position = Vector2(530.5, 1888)
+shape = SubResource("RectangleShape2D_3mx00")
+
+[node name="BallSpawner" type="Node2D" parent="." unique_id=577519519]
+
+[node name="Balls" type="Node" parent="." unique_id=198462065]
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1354177273]
+
+[node name="Hud" parent="HUD" unique_id=336195257 instance=ExtResource("3_kgtrg")]
+mouse_filter = 2
+
+[node name="SettingsButton" type="Button" parent="HUD" unique_id=941434743]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Managers" type="Node" parent="." unique_id=1010611509]
+
+[node name="DeadlineArea" type="Area2D" parent="." unique_id=344099647]
+script = ExtResource("4_3mx00")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadlineArea" unique_id=1631821747]
+position = Vector2(533, 180.25)
+shape = SubResource("RectangleShape2D_c37fm")
+debug_color = Color(0.8331484, 0.32052642, 0.580624, 0.41960785)
+
+[node name="ColorRect" type="ColorRect" parent="DeadlineArea/CollisionShape2D" unique_id=154146574]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -519.0
+offset_top = -116.25
+offset_right = 523.0
+offset_bottom = 106.75
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.69803923, 0.13333334, 0.13333334, 0.48235294)
