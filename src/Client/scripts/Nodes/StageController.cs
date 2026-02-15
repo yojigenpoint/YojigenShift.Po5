@@ -1,5 +1,7 @@
 using Godot;
 using YojigenShift.Po5.Scripts.Bridges;
+using YojigenShift.Po5.Scripts.Managers;
+using YojigenShift.Po5.Scripts.UI;
 
 namespace YojigenShift.Po5.Scripts.Nodes;
 
@@ -17,7 +19,14 @@ public partial class StageController : Node2D
 	[Export]
 	public float SpawnHeightY { get; set; } = 100f; // Fixed height for spawning
 
+	[Export] public float SpawnCooldown { get; set; } = 0.6f;
+
+	[Export] public HUDController HUD { get; set; }
+	[Signal] public delegate void NextBallChangedEventHandler(int nextTypeInt);
+
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
+	private YiBridge.GameElement _nextElementType;
+	private bool _canSpawn = true;
 
 	public override void _Ready()
 	{
@@ -26,29 +35,47 @@ public partial class StageController : Node2D
 		// Safety check
 		if (BallPrefab == null)
 		{
-			GD.PushError("[StageController] BallPrefab is not assigned! Please set it in Inspector.");
-			SetProcessUnhandledInput(false); // Disable input if setup is wrong
+			SetProcessUnhandledInput(false);
+			return;
 		}
+
+		if (HUD != null)
+			NextBallChanged += HUD.OnNextBallChanged;
+
+		_nextElementType = GetRandomElement();
+
+		CallDeferred(nameof(EmitInitialSignal));
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event is InputEventScreenTouch touchEvent)
+		if (GameManager.Instance.IsGameOver) return;
+		
+		if (!_canSpawn) return;
+
+		if (@event is InputEventScreenTouch touchEvent && touchEvent.Pressed)
 		{
-			if (touchEvent.Pressed)
-			{
-				SpawnBallAt(touchEvent.Position.X);
-			}
+			SpawnBallAt(touchEvent.Position.X);
 		}
+	}
+
+	private void EmitInitialSignal()
+	{
+		EmitSignal(SignalName.NextBallChanged, (int)_nextElementType);
 	}
 
 	private void SpawnBallAt(float xPosition)
 	{
+		_canSpawn = false;
+
+		GetTree().CreateTimer(SpawnCooldown).Timeout += () => _canSpawn = true;
+
 		// 1. Instantiate the ball
 		var ballInstance = BallPrefab.Instantiate<BallNode>();
 
 		// 2. Set position (Mouse X, Fixed Y)
-		ballInstance.Position = new Vector2(xPosition, SpawnHeightY);
+		float clampedX = Mathf.Clamp(xPosition, 50, 670);
+		ballInstance.Position = new Vector2(clampedX, SpawnHeightY);
 
 		// 3. Add to scene tree
 		if (PathContainer != null)
@@ -56,12 +83,14 @@ public partial class StageController : Node2D
 		else
 			AddChild(ballInstance);
 
-		// 4. Randomize Element
-		// Get a random enum value from GameElement (0 to 4)
-		int randomTypeInt = _rng.RandiRange(0, 4);
-		var randomType = (YiBridge.GameElement)randomTypeInt;
+		ballInstance.Setup(_nextElementType);
 
-		// 5. Initialize the ball
-		ballInstance.Setup(randomType);
+		_nextElementType = GetRandomElement();
+		EmitSignal(SignalName.NextBallChanged, (int)_nextElementType);
+	}
+
+	private YiBridge.GameElement GetRandomElement()
+	{
+		return (YiBridge.GameElement)_rng.RandiRange(0, 4);
 	}
 }

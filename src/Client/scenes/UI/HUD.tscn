@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c6hncky2ue68o"]
 
 [ext_resource type="Script" uid="uid://c05g246oqnp4b" path="res://scripts/UI/HUDController.cs" id="1_5fyfn"]
+[ext_resource type="Texture2D" uid="uid://ws3p3hoq2ry6" path="res://assets/textures/elements/ball_glass.png" id="2_7n4fj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7n4fj"]
 font_size = 64
@@ -8,7 +9,7 @@ font_size = 64
 [sub_resource type="LabelSettings" id="LabelSettings_5fyfn"]
 font_size = 100
 
-[node name="Hud" type="Control" unique_id=336195257 node_paths=PackedStringArray("ScoreLabel", "GameOverPanel", "RestartButton")]
+[node name="Hud" type="Control" unique_id=336195257 node_paths=PackedStringArray("ScoreLabel", "HighScoreLabel", "GameOverPanel", "RestartButton", "NextBallContainer", "NextBallPreview", "PreviewToggle")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,11 +17,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5fyfn")
-ScoreLabel = NodePath("Label")
+ScoreLabel = NodePath("ScoreLabel")
+HighScoreLabel = NodePath("HighScoreLabel")
 GameOverPanel = NodePath("GameOverPanel")
 RestartButton = NodePath("GameOverPanel/RestartButton")
+NextBallContainer = NodePath("NextBallPanel")
+NextBallPreview = NodePath("NextBallPanel/PreviewRect")
+PreviewToggle = NodePath("TogglePreview")
 
-[node name="Label" type="Label" parent="." unique_id=1075606923]
+[node name="ScoreLabel" type="Label" parent="." unique_id=1075606923]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -31,6 +36,22 @@ offset_bottom = 89.0
 grow_horizontal = 2
 text = "功德：0"
 label_settings = SubResource("LabelSettings_7n4fj")
+
+[node name="HighScoreLabel" type="Label" parent="." unique_id=924876395]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_top = 64.0
+offset_right = 120.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_font_sizes/font_size = 35
+text = "记录：0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GameOverPanel" type="Panel" parent="." unique_id=793047247]
 visible = false
@@ -73,3 +94,35 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Restart"
+
+[node name="NextBallPanel" type="Panel" parent="." unique_id=1678706378]
+layout_mode = 0
+offset_left = 968.0
+offset_top = 25.0
+offset_right = 1008.0
+offset_bottom = 65.0
+
+[node name="Label" type="Label" parent="NextBallPanel" unique_id=980328073]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 38.0
+offset_right = 41.0
+offset_bottom = 61.0
+text = "Next"
+
+[node name="PreviewRect" type="TextureRect" parent="NextBallPanel" unique_id=1847683963]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_7n4fj")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TogglePreview" type="CheckButton" parent="." unique_id=1009270474]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 34.0
+offset_right = 163.0
+offset_bottom = 65.0
+text = "Preview"

@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dlkj328x5fa60" path="res://scenes/Prefabs/Ball.tscn" id="1_b4etn"]
 [ext_resource type="Script" uid="uid://1e2qnsmgphkf" path="res://scripts/Nodes/StageController.cs" id="1_ce2sw"]
+[ext_resource type="Texture2D" uid="uid://b1xmwba0hb0ds" path="res://assets/textures/background/main_bg.png" id="3_c37fm"]
 [ext_resource type="PackedScene" uid="uid://c6hncky2ue68o" path="res://scenes/UI/HUD.tscn" id="3_kgtrg"]
 [ext_resource type="Script" uid="uid://c8d4d5uonwyas" path="res://scripts/Nodes/DeadlineNode.cs" id="4_3mx00"]
+[ext_resource type="Resource" uid="uid://d3ty7t1uhbwpj" path="res://assets/resources/DefaultElemTheme.tres" id="5_ayclm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ce2sw"]
 size = Vector2(3.5, 1891)
@@ -17,12 +19,14 @@ size = Vector2(1080, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c37fm"]
 size = Vector2(1077, 229.5)
 
-[node name="GameStage" type="Node2D" unique_id=238200124 node_paths=PackedStringArray("PathContainer")]
+[node name="GameStage" type="Node2D" unique_id=238200124 node_paths=PackedStringArray("PathContainer", "HUD")]
 script = ExtResource("1_ce2sw")
 BallPrefab = ExtResource("1_b4etn")
 PathContainer = NodePath("WallContainer")
+HUD = NodePath("HUD/Hud")
 
 [node name="Background" type="CanvasLayer" parent="." unique_id=1348307900]
+layer = -1
 
 [node name="BG_Image" type="TextureRect" parent="Background" unique_id=1975713943]
 anchors_preset = 15
@@ -30,6 +34,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_c37fm")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="WallContainer" type="StaticBody2D" parent="." unique_id=1519674388]
 
@@ -53,6 +61,7 @@ shape = SubResource("RectangleShape2D_3mx00")
 
 [node name="Hud" parent="HUD" unique_id=336195257 instance=ExtResource("3_kgtrg")]
 mouse_filter = 2
+ElemTheme = ExtResource("5_ayclm")
 
 [node name="SettingsButton" type="Button" parent="HUD" unique_id=941434743]
 offset_right = 8.0
