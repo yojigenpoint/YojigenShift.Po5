@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System.Linq;
 
 namespace YojigenShift.Po5.Scripts.Managers;
 
@@ -21,6 +20,7 @@ public partial class GameManager : Node
 	public int CurrentScore { get; private set; } = 0;
 	public int HighScore { get; private set; } = 0;
 	public bool IsGameOver { get; private set; } = false;
+	public bool HasSeenIntro { get; set; } = false;
 
 	private const string SavePath = "user://po5_save.dat";
 
