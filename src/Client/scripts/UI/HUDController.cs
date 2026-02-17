@@ -10,30 +10,36 @@ namespace YojigenShift.Po5.Scripts.UI;
 /// </summary>
 public partial class HUDController : Control
 {
-	[Export]
-	public Label ScoreLabel { get; set; }
-	[Export]
-	public Label HighScoreLabel { get; set; }
-	[Export]
-	public Control GameOverPanel { get; set; }
-	[Export]
-	public Button RestartButton { get; set; }
+	[ExportGroup("Core UI")]
+	[Export] public Label ScoreLabel { get; set; }
+	[Export] public Label HighScoreLabel { get; set; }
+	[Export] public Button PauseButton { get; set; }
 
+	[ExportGroup("Game Over UI")]
+	[Export]public Control GameOverPanel { get; set; }
+	[Export] public Label GameOverTitle { get; set; }
+	[Export] public Label GameOverMessage { get; set; }
+	[Export] public Button RestartButton { get; set; }
+
+	[ExportGroup("Preview UI")]
 	[Export] public Control NextBallContainer { get; set; }
 	[Export] public TextureRect NextBallPreview { get; set; }
 	[Export] public CheckButton PreviewToggle { get; set; }
 
-	[Export] public ElementAsset ElemTheme { get; set; }
+	[ExportGroup("External Components")]
+	[Export] public ElementAsset ElemTheme;
+	[Export] public SettingsController SettingsPopup;
+	[Export] public NarrativeAsset StoryData;
 
 	public override void _Ready()
 	{
-		if (ScoreLabel == null || GameOverPanel == null || RestartButton == null || HighScoreLabel == null)
+		if (ScoreLabel == null || GameOverPanel == null || RestartButton == null || HighScoreLabel == null || SettingsPopup == null)
 		{
 			GD.PushError("[HUDController] UI elements missing!");
 		}
 
 		// Init state
-		GameOverPanel.Visible = false;
+		if (GameOverPanel != null) GameOverPanel.Visible = false;
 		UpdateScoreUI(GameManager.Instance.CurrentScore);
 		UpdateHighScoreUI(GameManager.Instance.HighScore);
 
@@ -41,7 +47,11 @@ public partial class HUDController : Control
 		GameManager.Instance.ScoreChanged += UpdateScoreUI;
 		GameManager.Instance.HighScoreChanged += UpdateHighScoreUI;
 		GameManager.Instance.GameEnded += ShowGameOver;
-		RestartButton.Pressed += OnRestartClicked;
+		
+		if (RestartButton != null) RestartButton.Pressed += OnRestartClicked;
+
+		if (PauseButton != null && SettingsPopup != null)
+			PauseButton.Pressed += () => SettingsPopup.Open();
 
 		if (PreviewToggle != null)
 		{
@@ -91,8 +101,30 @@ public partial class HUDController : Control
 
 	private void ShowGameOver()
 	{
+		if (GameOverPanel == null) return;
+
 		GameOverPanel.Visible = true;
-		// Optionally, we could also play a sound or animation here.
+
+		if (StoryData != null && GameOverMessage != null)
+		{
+			var comforts = StoryData.GameOverComforts;
+			if (comforts != null && comforts.Length > 0)
+			{
+				int index = GD.RandRange(0, comforts.Length - 1);
+				GameOverMessage.Text = comforts[index];
+			}
+			else
+			{
+				GameOverMessage.Text = "休息一下，养精蓄锐。";
+			}
+		}
+
+		if (GameOverTitle != null)
+		{
+			bool isNewRecord = GameManager.Instance.CurrentScore >= GameManager.Instance.HighScore && GameManager.Instance.CurrentScore > 0;
+			GameOverTitle.Text = isNewRecord ? "功德圆满！" : "胜败乃常事";
+			GameOverTitle.Modulate = isNewRecord ? new Color(1, 0.8f, 0) : new Color(1, 1, 1); // Gold or White
+		}
 	}
 
 	private void OnRestartClicked()

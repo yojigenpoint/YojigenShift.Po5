@@ -1,6 +1,7 @@
 using Godot;
 using YojigenShift.Po5.Scripts.Bridges;
 using YojigenShift.Po5.Scripts.Managers;
+using YojigenShift.Po5.Scripts.Resources;
 using YojigenShift.Po5.Scripts.UI;
 
 namespace YojigenShift.Po5.Scripts.Nodes;
@@ -21,10 +22,15 @@ public partial class StageController : Node2D
 
 	[Export] public float SpawnCooldown { get; set; } = 0.6f;
 
+	[Export] public int InitialChaosCount { get; set; } = 120;
+	[Export] public Rect2 ChaosArea { get; set; } = new Rect2(50, 200, 620, 600);
+
 	[Export] public DialogueController IntroDialogue { get; set; }
 
 	[Export] public HUDController HUD { get; set; }
 	[Signal] public delegate void NextBallChangedEventHandler(int nextTypeInt);
+
+	[Export] public NarrativeAsset StoryData;
 
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private YiBridge.GameElement _nextElementType;
@@ -48,7 +54,9 @@ public partial class StageController : Node2D
 
 		CallDeferred(nameof(EmitInitialSignal));
 
-		CheckAndStartGame();
+		SpawnInitialChaos();
+
+		CallDeferred(nameof(CheckAndStartGame));
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -63,44 +71,73 @@ public partial class StageController : Node2D
 		}
 	}
 
+	public void CheckTutorial(bool isSheng, YiBridge.GameElement subject, YiBridge.GameElement obj)
+	{
+		if (IntroDialogue == null || StoryData == null) return;
+
+		if (IntroDialogue.Visible) return;
+
+		if (isSheng && !GameManager.Instance.HasSeenSheng)
+		{
+			GameManager.Instance.HasSeenSheng = true;
+			PauseGameAndShowDialogue(StoryData.TutorialSheng);
+		}
+		else if (!isSheng && !GameManager.Instance.HasSeenKe)
+		{
+			GameManager.Instance.HasSeenKe = true;
+			PauseGameAndShowDialogue(StoryData.TutorialKe);
+		}
+	}
+
+	private void SpawnInitialChaos()
+	{
+		for (int i = 0; i < InitialChaosCount; i++)
+		{
+			var ball = BallPrefab.Instantiate<BallNode>();
+
+			float x = _rng.RandfRange(ChaosArea.Position.X, ChaosArea.End.X);
+			float y = _rng.RandfRange(ChaosArea.Position.Y, ChaosArea.End.Y);
+
+			ball.Position = new Vector2(x, y);
+
+			if (PathContainer != null) PathContainer.AddChild(ball);
+			else AddChild(ball);
+
+			ball.Setup(GetRandomElement());
+			ball.IsInert = true;
+		}
+	}
+
+	private void PauseGameAndShowDialogue(string[] lines)
+	{
+		_canSpawn = false;
+
+		IntroDialogue.DialogueFinished += OnTutorialFinished;
+		IntroDialogue.StartDialogue(lines);
+	}
+
+	private void OnTutorialFinished()
+	{
+		IntroDialogue.DialogueFinished -= OnTutorialFinished;
+		_canSpawn = true;
+	}
+
 	private void CheckAndStartGame()
 	{
-		// 如果还没看过剧情，且对话框引用存在
-		if (!GameManager.Instance.HasSeenIntro && IntroDialogue != null)
+		if (!GameManager.Instance.HasSeenIntro && IntroDialogue != null && StoryData != null)
 		{
-			GD.Print("[Stage] Starting Intro Narrative...");
-
-			// 1. 绑定对话结束信号
-			IntroDialogue.DialogueFinished += OnIntroFinished;
-
-			// 2. 准备台词 (这里可以以后从 JSON 或 Resource 读取)
-			string[] introLines = new string[]
-			{
-					"咳咳... 年轻人，你终于来了。",
-					"这世间五行混乱，天地之气失衡。",
-					"你需要通过「五行相生」之理，调和这些元气。",
-					"切记：水生木，木生火... 只有顺势而为，方能功德圆满。",
-                    "去吧，让我看看你的悟性！"
-			};
-
-			// 3. 开始对话 (游戏保持暂停状态 _canSpawn = false)
-			IntroDialogue.StartDialogue(introLines);
+			IntroDialogue.StartDialogue(StoryData.IntroLines);
 		}
 		else
 		{
-			// 如果已经看过，或者没有对话框，直接开始
 			StartGameplay();
 		}
 	}
 
 	private void OnIntroFinished()
 	{
-		GD.Print("[Stage] Intro Finished. Starting Game.");
-
-		// 标记已看
 		GameManager.Instance.HasSeenIntro = true;
 
-		// 解绑信号防止内存泄漏
 		IntroDialogue.DialogueFinished -= OnIntroFinished;
 
 		StartGameplay();
@@ -108,9 +145,7 @@ public partial class StageController : Node2D
 
 	private void StartGameplay()
 	{
-		// 允许生成
 		_canSpawn = true;
-		GD.Print("[Stage] Gameplay Started!");
 	}
 
 	private void EmitInitialSignal()
@@ -127,8 +162,12 @@ public partial class StageController : Node2D
 		// 1. Instantiate the ball
 		var ballInstance = BallPrefab.Instantiate<BallNode>();
 
+		float screenWidth = GetViewportRect().Size.X;
+
+		float margin = 35f;
+
 		// 2. Set position (Mouse X, Fixed Y)
-		float clampedX = Mathf.Clamp(xPosition, 50, 670);
+		float clampedX = Mathf.Clamp(xPosition, margin, screenWidth - margin);
 		ballInstance.Position = new Vector2(clampedX, SpawnHeightY);
 
 		// 3. Add to scene tree

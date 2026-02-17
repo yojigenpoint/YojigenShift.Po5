@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using YojigenShift.Po5.Scripts.Bridges;
 
 namespace YojigenShift.Po5.Scripts.Resources;

@@ -11,6 +11,7 @@ public partial class MainMenuController : Control
 	[Export] public BaseButton LibraryButton { get; set; }
 	[Export] public BaseButton SettingsButton { get; set; }
 	[Export] public Control VersionLabel { get; set; }
+	[Export] public SettingsController SettingsPopup { get; set; }
 
 	[ExportGroup("Scene Config")]
 	[Export(PropertyHint.File, "*.tscn")]
@@ -18,10 +19,13 @@ public partial class MainMenuController : Control
 	[Export(PropertyHint.File, "*.tscn")]
 	public string LibraryScenePath { get; set; } = "res://scenes/UI/Library.tscn";
 
+	private TextureRect _gameTitle;
+
 	public override void _Ready()
 	{
 		// 1. Initialization
 		UpdateHighScore();
+		_gameTitle = GetNode<TextureRect>("TitleLogo");
 
 		// 2. Button Events
 		if (StartButton != null) StartButton.Pressed += OnStartPressed;
@@ -32,6 +36,16 @@ public partial class MainMenuController : Control
 		Modulate = new Color(1, 1, 1, 0);
 		var tween = CreateTween();
 		tween.TweenProperty(this, "modulate:a", 1.0f, 0.5f).SetEase(Tween.EaseType.Out);
+
+		if (_gameTitle != null)
+		{
+			var tweenTitle = CreateTween();
+
+			tweenTitle.TweenProperty(_gameTitle, "scale", new Vector2(1.05f, 1.05f), 2.0f)
+				 .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+			tweenTitle.TweenProperty(_gameTitle, "scale", Vector2.One, 2.0f)
+				.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+		}
 	}
 
 	private void UpdateHighScore()
@@ -44,8 +58,7 @@ public partial class MainMenuController : Control
 
 	private void OnStartPressed()
 	{
-		// 播放点击音效 (如果你有的话)
-		// AudioManager.Instance.PlaySFX("ui_click");
+		AudioManager.Instance.PlaySFX("ui_click");
 
 		GD.Print("[MainMenu] Start Game Pressed");
 
@@ -61,13 +74,11 @@ public partial class MainMenuController : Control
 
 	private void OnLibraryPressed()
 	{
-		GD.Print("[MainMenu] Open Library - Coming Soon in v0.2");
 		SceneManager.Instance.ChangeScene(LibraryScenePath);
 	}
 
 	private void OnSettingsPressed()
 	{
-		GD.Print("[MainMenu] Open Settings - Coming Soon in v0.2");
-		// TODO: 显示设置弹窗
+		SettingsPopup.Open();
 	}
 }

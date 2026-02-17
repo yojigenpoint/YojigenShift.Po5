@@ -2,14 +2,20 @@
 
 [ext_resource type="Script" uid="uid://c05g246oqnp4b" path="res://scripts/UI/HUDController.cs" id="1_5fyfn"]
 [ext_resource type="Texture2D" uid="uid://ws3p3hoq2ry6" path="res://assets/textures/elements/ball_glass.png" id="2_7n4fj"]
+[ext_resource type="Resource" uid="uid://d3ty7t1uhbwpj" path="res://assets/resources/DefaultElemTheme.tres" id="2_vphgt"]
+[ext_resource type="Resource" uid="uid://cv2yy6up3nb7u" path="res://assets/resources/Story.tres" id="3_5ip4n"]
+[ext_resource type="Texture2D" uid="uid://bqfgxy17fsv25" path="res://assets/textures/ui/text_bg.png" id="4_0qpk7"]
+[ext_resource type="Texture2D" uid="uid://bg8efwscqkbyk" path="res://assets/textures/ui/dialog_bg.png" id="5_ucsqe"]
+[ext_resource type="Texture2D" uid="uid://mgr0scwxg1f7" path="res://assets/textures/ui/stamp_bg.png" id="6_ucsqe"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7n4fj"]
 font_size = 64
 
 [sub_resource type="LabelSettings" id="LabelSettings_5fyfn"]
 font_size = 100
+font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 
-[node name="Hud" type="Control" unique_id=336195257 node_paths=PackedStringArray("ScoreLabel", "HighScoreLabel", "GameOverPanel", "RestartButton", "NextBallContainer", "NextBallPreview", "PreviewToggle")]
+[node name="Hud" type="Control" unique_id=336195257 node_paths=PackedStringArray("ScoreLabel", "HighScoreLabel", "PauseButton", "GameOverPanel", "GameOverTitle", "GameOverMessage", "RestartButton", "NextBallContainer", "NextBallPreview", "PreviewToggle")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,15 +23,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5fyfn")
-ScoreLabel = NodePath("ScoreLabel")
-HighScoreLabel = NodePath("HighScoreLabel")
+ScoreLabel = NodePath("Scores/ScoreLabel")
+HighScoreLabel = NodePath("HighScores/HighScoreLabel")
+PauseButton = NodePath("PauseButton")
 GameOverPanel = NodePath("GameOverPanel")
-RestartButton = NodePath("GameOverPanel/RestartButton")
+GameOverTitle = NodePath("GameOverPanel/TitleLabel")
+GameOverMessage = NodePath("GameOverPanel/MessageLabel")
+RestartButton = NodePath("")
 NextBallContainer = NodePath("NextBallPanel")
 NextBallPreview = NodePath("NextBallPanel/PreviewRect")
 PreviewToggle = NodePath("TogglePreview")
+ElemTheme = ExtResource("2_vphgt")
+StoryData = ExtResource("3_5ip4n")
 
-[node name="ScoreLabel" type="Label" parent="." unique_id=1075606923]
+[node name="Scores" type="TextureRect" parent="." unique_id=577924107]
+self_modulate = Color(1, 1, 1, 0.5568628)
+custom_minimum_size = Vector2(450, 90)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+texture = ExtResource("4_0qpk7")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ScoreLabel" type="Label" parent="Scores" unique_id=1075606923]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -37,92 +60,169 @@ grow_horizontal = 2
 text = "功德：0"
 label_settings = SubResource("LabelSettings_7n4fj")
 
-[node name="HighScoreLabel" type="Label" parent="." unique_id=924876395]
+[node name="HighScores" type="TextureRect" parent="." unique_id=1575550721]
+self_modulate = Color(1, 1, 1, 0.54901963)
+custom_minimum_size = Vector2(250, 90)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -109.0
-offset_top = 64.0
-offset_right = 120.0
-offset_bottom = 153.0
+offset_left = -120.0
+offset_top = 71.0
+offset_right = 130.0
+offset_bottom = 161.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
-theme_override_font_sizes/font_size = 35
-text = "记录：0"
-horizontal_alignment = 1
-vertical_alignment = 1
+texture = ExtResource("4_0qpk7")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="GameOverPanel" type="Panel" parent="." unique_id=793047247]
-visible = false
-self_modulate = Color(0.101960786, 0.101960786, 0.101960786, 0.5882353)
+[node name="HighScoreLabel" type="Label" parent="HighScores" unique_id=924876395]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Label" type="Label" parent="GameOverPanel" unique_id=1885747627]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Game Over"
-label_settings = SubResource("LabelSettings_5fyfn")
-
-[node name="RestartButton" type="Button" parent="GameOverPanel" unique_id=1133645076]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.505
-anchor_top = 0.596
-anchor_right = 0.505
-anchor_bottom = 0.596
-offset_left = -89.400024
-offset_top = -39.32007
-offset_right = 89.954834
-offset_bottom = 40.67993
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 40
-text = "Restart"
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_font_sizes/font_size = 35
+text = "记录：0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NextBallPanel" type="Panel" parent="." unique_id=1678706378]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 968.0
+offset_left = 935.0
 offset_top = 25.0
-offset_right = 1008.0
-offset_bottom = 65.0
+offset_right = 1035.0
+offset_bottom = 125.0
 
 [node name="Label" type="Label" parent="NextBallPanel" unique_id=980328073]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 38.0
-offset_right = 41.0
-offset_bottom = 61.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "Next"
 
 [node name="PreviewRect" type="TextureRect" parent="NextBallPanel" unique_id=1847683963]
 custom_minimum_size = Vector2(40, 40)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_7n4fj")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="TogglePreview" type="CheckButton" parent="." unique_id=1009270474]
 layout_mode = 0
-offset_left = 53.0
-offset_top = 34.0
-offset_right = 163.0
-offset_bottom = 65.0
+offset_left = 132.0
+offset_top = 30.0
+offset_right = 242.0
+offset_bottom = 61.0
 text = "Preview"
+
+[node name="PauseButton" type="Button" parent="." unique_id=1891975482]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 21.0
+offset_top = 26.0
+offset_right = 121.0
+offset_bottom = 126.0
+theme_override_font_sizes/font_size = 50
+text = "II"
+
+[node name="GameOverPanel" type="NinePatchRect" parent="." unique_id=317389623]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_ucsqe")
+patch_margin_left = 80
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 80
+
+[node name="TitleLabel" type="Label" parent="GameOverPanel" unique_id=1885747627]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -193.0
+offset_right = 271.5
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_5fyfn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="GameOverPanel" unique_id=185349699]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -11.5
+offset_right = 359.0
+offset_bottom = 219.27026
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 50
+text = "Message"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="TextureButton" parent="GameOverPanel" unique_id=825435445]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -151.76178
+offset_top = 367.0
+offset_right = 151.76178
+offset_bottom = 565.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("6_ucsqe")
+texture_pressed = ExtResource("6_ucsqe")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GameOverPanel/RestartButton" unique_id=181207371]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -11.5
+offset_right = 0.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 50
+text = "Restart"

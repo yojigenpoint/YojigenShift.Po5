@@ -21,6 +21,8 @@ public partial class GameManager : Node
 	public int HighScore { get; private set; } = 0;
 	public bool IsGameOver { get; private set; } = false;
 	public bool HasSeenIntro { get; set; } = false;
+	public bool HasSeenSheng { get; set; } = false;
+	public bool HasSeenKe { get; set; } = false;
 
 	private const string SavePath = "user://po5_save.dat";
 
@@ -86,7 +88,9 @@ public partial class GameManager : Node
 
 		var data = new Dictionary<string, Variant>
 		{
-			{"high_score", HighScore }
+			{"high_score", HighScore },
+			{"has_seen_sheng", HasSeenSheng },
+			{"has_seen_ke", HasSeenKe }
 		};
 
 		file.StoreString(Json.Stringify(data));
@@ -107,6 +111,14 @@ public partial class GameManager : Node
 			{
 				HighScore = (int)data["high_score"];
 				CallDeferred(nameof(EmitHighScoreSignal));
+			}
+			if (data.ContainsKey("has_seen_sheng"))
+			{
+				HasSeenSheng = (bool)data["has_seen_sheng"];
+			}
+			if (data.ContainsKey("has_seen_ke"))
+			{
+				HasSeenKe = (bool)data["has_seen_ke"];
 			}
 		}
 	}
