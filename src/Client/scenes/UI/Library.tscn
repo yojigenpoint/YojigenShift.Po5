@@ -1,0 +1,186 @@
+[gd_scene format=3 uid="uid://dcdgatvdceykf"]
+
+[ext_resource type="Script" uid="uid://i7vnqweoojaw" path="res://scripts/UI/LibraryController.cs" id="1_cwhd4"]
+[ext_resource type="Resource" uid="uid://d3ty7t1uhbwpj" path="res://assets/resources/DefaultElemTheme.tres" id="2_u15xa"]
+[ext_resource type="Texture2D" uid="uid://yjuiu0fat87w" path="res://assets/textures/ui/game_bg.png" id="3_u8tsp"]
+[ext_resource type="Texture2D" uid="uid://ddety0e0lltod" path="res://assets/textures/elements/ball_wood.png" id="4_di30s"]
+[ext_resource type="Texture2D" uid="uid://b1nxapbct3md4" path="res://assets/textures/elements/ball_fire.png" id="5_pgkdm"]
+[ext_resource type="Texture2D" uid="uid://b0aeuvduo6yar" path="res://assets/textures/elements/ball_earth.png" id="6_t3w6j"]
+[ext_resource type="Texture2D" uid="uid://dhdri4pt5gplj" path="res://assets/textures/elements/ball_metal.png" id="7_g7e8c"]
+[ext_resource type="Texture2D" uid="uid://d2h6357l7o7ne" path="res://assets/textures/elements/ball_water.png" id="8_t52pv"]
+
+[node name="Library" type="Control" unique_id=792805236 node_paths=PackedStringArray("BackButton", "DetailPopup", "CloseDetailButton", "DetailIcon", "DetailTitle", "DetailDesc", "DetailSheng", "DetailKe", "ButtonGrid")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cwhd4")
+ElemTheme = ExtResource("2_u15xa")
+BackButton = NodePath("BackButton")
+DetailPopup = NodePath("DetailPopup")
+CloseDetailButton = NodePath("DetailPopup/CloseButton")
+DetailIcon = NodePath("DetailPopup/Icon")
+DetailTitle = NodePath("DetailPopup/Title")
+DetailDesc = NodePath("DetailPopup/Desc")
+DetailSheng = NodePath("DetailPopup/Sheng")
+DetailKe = NodePath("DetailPopup/Ke")
+ButtonGrid = NodePath("ButtonGrid")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1432827151]
+modulate = Color(0.42719442, 0.36707708, 0.15107402, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_u8tsp")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BackButton" type="Button" parent="." unique_id=802476915]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -121.0
+offset_right = 64.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "返  回"
+flat = true
+
+[node name="ButtonGrid" type="GridContainer" parent="." unique_id=46400861]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WoodButton" type="TextureButton" parent="ButtonGrid" unique_id=42000736]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+texture_normal = ExtResource("4_di30s")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="FireButton" type="TextureButton" parent="ButtonGrid" unique_id=1249879917]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+texture_normal = ExtResource("5_pgkdm")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="EarthButton" type="TextureButton" parent="ButtonGrid" unique_id=1656161148]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+texture_normal = ExtResource("6_t3w6j")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MetalButton" type="TextureButton" parent="ButtonGrid" unique_id=380432371]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+texture_normal = ExtResource("7_g7e8c")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="WaterButton" type="TextureButton" parent="ButtonGrid" unique_id=1716679650]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+texture_normal = ExtResource("8_t52pv")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DetailPopup" type="Panel" parent="." unique_id=593277008]
+visible = false
+custom_minimum_size = Vector2(864, 1536)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.476
+anchor_right = 0.5
+anchor_bottom = 0.476
+offset_left = -20.0
+offset_top = 26.079956
+offset_right = 20.0
+offset_bottom = 66.079956
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Icon" type="TextureRect" parent="DetailPopup" unique_id=1192859581]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -248.0
+offset_top = 55.0
+offset_right = 252.0
+offset_bottom = 555.0
+grow_horizontal = 2
+texture = ExtResource("4_di30s")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="DetailPopup" unique_id=1002257999]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.455
+anchor_right = 0.5
+anchor_bottom = 0.455
+offset_left = -50.0
+offset_top = -86.880005
+offset_right = 50.0
+offset_bottom = 51.119995
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "木"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Desc" type="RichTextLabel" parent="DetailPopup" unique_id=1281441942]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sheng" type="Label" parent="DetailPopup" unique_id=1132821096]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Ke" type="Label" parent="DetailPopup" unique_id=1951061869]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CloseButton" type="Button" parent="DetailPopup" unique_id=309439717]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -45.0
+offset_bottom = 91.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 60
+text = "X"
+flat = true

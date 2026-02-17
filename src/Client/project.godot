@@ -11,14 +11,16 @@ config_version=5
 [application]
 
 config/name="Client"
+run/main_scene="uid://duxkkg6tut3cl"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
 YiBridge="*uid://byfgdeub7vidq"
-GameManager="*uid://c0y5eoilgp5al"
 AudioManager="*uid://36xf4ij06rsf"
+SceneManager="*uid://b8ubgxnatekwj"
+GameManager="*uid://c0y5eoilgp5al"
 
 [display]
 

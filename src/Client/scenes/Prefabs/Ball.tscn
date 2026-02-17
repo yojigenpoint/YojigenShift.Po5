@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://d3ty7t1uhbwpj" path="res://assets/resources/DefaultElemTheme.tres" id="2_ntsuf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ntsuf"]
-radius = 30.675724
+radius = 40.0
 
 [node name="Ball" type="RigidBody2D" unique_id=699335819]
 script = ExtResource("1_le6ns")
@@ -15,6 +15,7 @@ Theme = ExtResource("2_ntsuf")
 shape = SubResource("CircleShape2D_ntsuf")
 
 [node name="Visuals" type="Node2D" parent="." unique_id=359541271]
+scale = Vector2(0.2, 0.2)
 
 [node name="BaseColor" type="Sprite2D" parent="Visuals" unique_id=934366987]
 
@@ -30,11 +31,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
+offset_left = -8.0
 offset_top = -11.5
-offset_right = 20.0
+offset_right = 8.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+text = "木"
 horizontal_alignment = 1
 vertical_alignment = 1

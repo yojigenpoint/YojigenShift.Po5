@@ -1,5 +1,4 @@
 using Godot;
-using System.Security.Cryptography;
 using YojigenShift.Po5.Scripts.Bridges;
 using YojigenShift.Po5.Scripts.Managers;
 using YojigenShift.Po5.Scripts.Resources;
@@ -16,11 +15,14 @@ public partial class BallNode : RigidBody2D
 
 	// The element type of this specific ball (Wood, Fire, etc.)
 	public YiBridge.GameElement ElementType { get; private set; } = YiBridge.GameElement.Wood;
+	public bool IsInert { get; set; } = false;
 
 	private Label _label;
 	private Sprite2D _iconSprite;
 	private Sprite2D _baseSprite;
 	private Sprite2D _glassSprite;
+
+	private Node2D _visuals;
 
 	// Flag to prevent double-processing collisions (e.g., if already dying)
 	private bool _isProcessed = false;
@@ -36,6 +38,8 @@ public partial class BallNode : RigidBody2D
 		_iconSprite = GetNode<Sprite2D>("Visuals/InkIcon");
 		_glassSprite = GetNode<Sprite2D>("Visuals/GlassShell");
 
+		_visuals = GetNode<Node2D>("Visuals");
+
 		ContactMonitor = true;
 		MaxContactsReported = 3;
 
@@ -43,8 +47,10 @@ public partial class BallNode : RigidBody2D
 
 		// Spawn Animation: Pop in
 		Scale = Vector2.Zero;
+		float animTime = IsInert ? 0.1f : 0.3f;
 		var tween = CreateTween();
-		tween.TweenProperty(this, "scale", Vector2.One, 0.3f).SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
+		tween.TweenProperty(this, "scale", Vector2.One * 0.65f, animTime)
+			 .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
 	}
 
 	public void Setup(YiBridge.GameElement type)
@@ -93,6 +99,8 @@ public partial class BallNode : RigidBody2D
 		// If I'm already dying or processed, ignore collisions
 		if (_isProcessed) return;
 
+		if (IsInert) return;
+
 		if (body is BallNode otherBall)
 		{
 			// If the other ball is already dying, ignore it
@@ -107,11 +115,13 @@ public partial class BallNode : RigidBody2D
 		// Query YiBridge for the relationship: "My Element" vs "Other Element"
 		var relation = YiBridge.Instance.GetRelationship(this.ElementType, other.ElementType);
 
+		var stageController = GetTree().CurrentScene as StageController;
+
 		switch (relation)
 		{
 			case YiBridge.RelationType.Generating:
 				// Logic: Mother sacrifices herself to feed the child.
-				GD.Print($"[Sheng/生] {this.ElementType} -> {other.ElementType}");
+				stageController.CheckTutorial(true, this.ElementType, other.ElementType);
 
 				AudioManager.Instance.PlaySFX("merge");
 				GameManager.Instance.AddScore(10);
@@ -122,7 +132,7 @@ public partial class BallNode : RigidBody2D
 
 			case YiBridge.RelationType.Overcoming:
 				// Logic: Victim is destroyed.
-				GD.Print($"[Ke/克] {this.ElementType} -> {other.ElementType}");
+				stageController.CheckTutorial(false, this.ElementType, other.ElementType);
 
 				AudioManager.Instance.PlaySFX("destroy", 0.2f);
 				GameManager.Instance.AddScore(50);
@@ -149,7 +159,8 @@ public partial class BallNode : RigidBody2D
 		}
 		else
 		{
-			float targetScale = 1.0f +(_currentLevel * 0.2f); // Level 1: 1.2x, Level 2: 1.4x
+			float baseScale = 0.65f;
+			float targetScale = baseScale * (1.0f +(_currentLevel * 0.3f));
 
 			var tween = CreateTween();
 			tween.TweenProperty(this, "scale", Vector2.One * targetScale, 0.3f)

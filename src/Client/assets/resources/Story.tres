@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NarrativeAsset" format=3 uid="uid://cv2yy6up3nb7u"]
+
+[ext_resource type="Script" uid="uid://cpwrpfbtgurxi" path="res://scripts/Resources/NarrativeAsset.cs" id="1_deckh"]
+
+[resource]
+script = ExtResource("1_deckh")
+IntroLines = PackedStringArray("唔……这天，怎么灰蒙蒙的？", "老朽好像……睡了很久。这里的五行之气，怎么全都乱了套？", "年轻人，你是来帮我梳理这天地元气的吗？", "来，试着把那团气放下来。随便放，让老朽看看你的手气。")
+TutorialSheng = PackedStringArray("妙啊！你看，水滋润了木，木便长高了。", "这就叫[b]「相生」[/b]。顺势而为，生生不息，乃是积攒功德的捷径。")
+TutorialKe = PackedStringArray("刚柔并济，好手段！", "火势太旺，便用水去压一压。这就叫[b]「相克」[/b]。", "克不是坏事，是为了去除杂念，腾出空间。")
+GameOverComforts = PackedStringArray("满了，满了。过犹不及，月盈则亏。", "天地间的气数便是如此，到了顶峰，自然要重头再来。", "")
+metadata/_custom_type_script = "uid://cpwrpfbtgurxi"

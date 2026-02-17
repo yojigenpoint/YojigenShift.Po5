@@ -11,6 +11,9 @@ public partial class AudioManager : Node
 {
 	public static AudioManager Instance { get; private set; }
 
+	public float BGMVolume { get; private set; } = 1.0f;
+	public float SFXVolume { get; private set; } = 1.0f;
+
 	private AudioStreamPlayer _bgmPlayer;
 	private List<AudioStreamPlayer> _sfxPool = new List<AudioStreamPlayer>();
 	private int _poolSize = 12; // Allow 12 concurrent sounds
@@ -37,6 +40,7 @@ public partial class AudioManager : Node
 	{
 		_bgmPlayer = new AudioStreamPlayer();
 		_bgmPlayer.Name = "BGMPlayer";
+		_bgmPlayer.Bus = "Master";
 		AddChild(_bgmPlayer);
 	}
 
@@ -46,8 +50,27 @@ public partial class AudioManager : Node
 		{
 			var player = new AudioStreamPlayer();
 			player.Name = $"SFXPlayer_{i}";
+			player.Bus = "Master";
 			AddChild(player);
 			_sfxPool.Add(player);
+		}
+	}
+
+	public void SetBGMVolume(float value)
+	{
+		BGMVolume = Mathf.Clamp(value, 0f, 1f);
+		float db = (value <= 0.001f) ? -80f : Mathf.LinearToDb(value);
+		_bgmPlayer.VolumeDb = db;
+	}
+
+	public void SetSFXVolume(float value)
+	{
+		SFXVolume = Mathf.Clamp(value, 0f, 1f);
+		float db = (value <= 0.001f) ? -80f : Mathf.LinearToDb(value);
+
+		foreach (var player in _sfxPool)
+		{
+			player.VolumeDb = db;
 		}
 	}
 
@@ -79,6 +102,9 @@ public partial class AudioManager : Node
 		_poolIndex = (_poolIndex + 1) % _poolSize;
 
 		player.Stream = _soundLibrary[key];
+
+		float db = (SFXVolume <= 0.001f) ? -80f : Mathf.LinearToDb(SFXVolume);
+		player.VolumeDb = db;
 
 		// Randomize pitch slightly to make it sound less repetitive
 		if (pitchRange > 0)

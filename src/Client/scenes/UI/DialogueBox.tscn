@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://c2ris6a857gs4"]
+
+[ext_resource type="Script" uid="uid://b4j46qcwip27f" path="res://scripts/UI/DialogueController.cs" id="1_gf8gl"]
+[ext_resource type="Texture2D" uid="uid://bc85afu5qavwr" path="res://assets/textures/ui/elder.png" id="2_bh7g6"]
+[ext_resource type="Texture2D" uid="uid://bg8efwscqkbyk" path="res://assets/textures/ui/dialog_bg.png" id="3_5jxm4"]
+[ext_resource type="Texture2D" uid="uid://bx1niqaht6cgh" path="res://assets/textures/ui/loading_logo.png" id="4_breff"]
+
+[node name="DialogueBox" type="Control" unique_id=1767316839 node_paths=PackedStringArray("Portrait", "ContentLabel", "ClickIndicator")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gf8gl")
+Portrait = NodePath("Portrait")
+ContentLabel = NodePath("TextPanel/ContentLabel")
+ClickIndicator = NodePath("TextPanel/ContinueIndicator")
+
+[node name="Background" type="ColorRect" parent="." unique_id=781871466]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.101960786, 0.101960786, 0.101960786, 0.22745098)
+
+[node name="Portrait" type="TextureRect" parent="." unique_id=511762745]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -817.0
+offset_right = 484.0
+offset_bottom = -317.0
+grow_vertical = 0
+texture = ExtResource("2_bh7g6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextPanel" type="NinePatchRect" parent="." unique_id=1799191701]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_5jxm4")
+patch_margin_left = 100
+patch_margin_top = 50
+patch_margin_right = 100
+patch_margin_bottom = 50
+
+[node name="ContentLabel" type="RichTextLabel" parent="TextPanel" unique_id=10819828]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 113.0
+offset_top = 94.0
+offset_right = -92.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/normal_font_size = 45
+text = "测试一下"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueIndicator" type="TextureRect" parent="TextPanel" unique_id=3238228]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -231.0
+offset_top = -182.0
+offset_right = -154.0
+offset_bottom = -62.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("4_breff")
+expand_mode = 1
+stretch_mode = 5

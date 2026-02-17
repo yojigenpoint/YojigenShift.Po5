@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://duxkkg6tut3cl"]
+
+[ext_resource type="Script" uid="uid://iy5hp8nkcmkq" path="res://scripts/UI/SplashScreenController.cs" id="1_ays8s"]
+[ext_resource type="Texture2D" uid="uid://yjuiu0fat87w" path="res://assets/textures/ui/game_bg.png" id="2_sgwk0"]
+[ext_resource type="Texture2D" uid="uid://dmr5kxltbdo6p" path="res://assets/textures/ui/studioLogo.png" id="3_opyeb"]
+[ext_resource type="Texture2D" uid="uid://d01wdfnkajc4g" path="res://assets/textures/ui/game_logo.png" id="4_d2ccr"]
+[ext_resource type="Texture2D" uid="uid://bx1niqaht6cgh" path="res://assets/textures/ui/loading_logo.png" id="5_lt5ug"]
+
+[node name="SplashScreen" type="Control" unique_id=1855951438 node_paths=PackedStringArray("LogoStudio", "LogoGame", "WarningContainer", "LoadingSpinner")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ays8s")
+LogoStudio = NodePath("LogoStudio")
+LogoGame = NodePath("LogoGame")
+WarningContainer = NodePath("WarningContainer")
+LoadingSpinner = NodePath("LoadingSpinner")
+NextScenePath = "uid://d241f280trwyu"
+
+[node name="Background" type="TextureRect" parent="." unique_id=1443554009]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_sgwk0")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="LogoStudio" type="TextureRect" parent="." unique_id=954264828]
+modulate = Color(0.101960786, 0.101960786, 0.101960786, 1)
+self_modulate = Color(0.101960786, 0.101960786, 0.101960786, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_opyeb")
+stretch_mode = 5
+
+[node name="LogoGame" type="TextureRect" parent="." unique_id=975805906]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -415.0
+offset_top = -392.5
+offset_right = 370.0
+offset_bottom = 392.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_d2ccr")
+stretch_mode = 5
+
+[node name="WarningContainer" type="VBoxContainer" parent="." unique_id=1589381974]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -92.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="WarningContainer" unique_id=1605983981]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 32
+text = "易学博大精深，本游戏仅供娱乐科普。
+适度游戏益脑，沉迷游戏伤身。"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingSpinner" type="TextureRect" parent="." unique_id=1469363001]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -78.0
+offset_right = 32.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("5_lt5ug")
+expand_mode = 1
+stretch_mode = 5

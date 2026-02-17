@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://cp0rno2uwyivv"]
+
+[ext_resource type="Script" uid="uid://bknpwhvvtpqkk" path="res://scripts/UI/SettingsController.cs" id="1_jmakk"]
+[ext_resource type="Texture2D" uid="uid://yjuiu0fat87w" path="res://assets/textures/ui/game_bg.png" id="2_mo1bt"]
+
+[node name="SettingPanel" type="Control" unique_id=1447106065 node_paths=PackedStringArray("BGMSlider", "SFXSlider", "CloseButton", "QuitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jmakk")
+BGMSlider = NodePath("NinePatchRect/MusicSettings/BGMSlider")
+SFXSlider = NodePath("NinePatchRect/SFXSettings/SFXSlider")
+CloseButton = NodePath("NinePatchRect/CloseButton")
+QuitButton = NodePath("NinePatchRect/QuitButton")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1491385703]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5137255)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=2113956972]
+custom_minimum_size = Vector2(800, 1000)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_mo1bt")
+
+[node name="Title" type="Label" parent="NinePatchRect" unique_id=377639934]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -133.0
+offset_top = 26.0
+offset_right = 138.0
+offset_bottom = 136.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 80
+text = "Setting"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSettings" type="HBoxContainer" parent="NinePatchRect" unique_id=1284241519]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -126.0
+offset_right = 150.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="NinePatchRect/MusicSettings" unique_id=168125738]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 40
+text = "Music"
+
+[node name="BGMSlider" type="HSlider" parent="NinePatchRect/MusicSettings" unique_id=288800764]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SFXSettings" type="HBoxContainer" parent="NinePatchRect" unique_id=1287505826]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="NinePatchRect/SFXSettings" unique_id=55508387]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 40
+text = "SFX    "
+
+[node name="SFXSlider" type="HSlider" parent="NinePatchRect/SFXSettings" unique_id=1699133230]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="CloseButton" type="Button" parent="NinePatchRect" unique_id=1603188088]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -98.0
+offset_right = 50.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Close"
+
+[node name="QuitButton" type="Button" parent="NinePatchRect" unique_id=1692022188]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -271.0
+offset_right = 100.0
+offset_bottom = -171.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.69803923, 0.13333334, 0.13333334, 1)
+theme_override_font_sizes/font_size = 50
+text = "Back"

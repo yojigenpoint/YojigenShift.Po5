@@ -4,8 +4,10 @@
 [ext_resource type="Script" uid="uid://1e2qnsmgphkf" path="res://scripts/Nodes/StageController.cs" id="1_ce2sw"]
 [ext_resource type="Texture2D" uid="uid://b1xmwba0hb0ds" path="res://assets/textures/background/main_bg.png" id="3_c37fm"]
 [ext_resource type="PackedScene" uid="uid://c6hncky2ue68o" path="res://scenes/UI/HUD.tscn" id="3_kgtrg"]
+[ext_resource type="Resource" uid="uid://cv2yy6up3nb7u" path="res://assets/resources/Story.tres" id="3_x7o3u"]
 [ext_resource type="Script" uid="uid://c8d4d5uonwyas" path="res://scripts/Nodes/DeadlineNode.cs" id="4_3mx00"]
-[ext_resource type="Resource" uid="uid://d3ty7t1uhbwpj" path="res://assets/resources/DefaultElemTheme.tres" id="5_ayclm"]
+[ext_resource type="PackedScene" uid="uid://c2ris6a857gs4" path="res://scenes/UI/DialogueBox.tscn" id="6_ddu6w"]
+[ext_resource type="PackedScene" uid="uid://cp0rno2uwyivv" path="res://scenes/UI/SettingPanel.tscn" id="8_4fpor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ce2sw"]
 size = Vector2(3.5, 1891)
@@ -19,11 +21,13 @@ size = Vector2(1080, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c37fm"]
 size = Vector2(1077, 229.5)
 
-[node name="GameStage" type="Node2D" unique_id=238200124 node_paths=PackedStringArray("PathContainer", "HUD")]
+[node name="GameStage" type="Node2D" unique_id=238200124 node_paths=PackedStringArray("PathContainer", "IntroDialogue", "HUD")]
 script = ExtResource("1_ce2sw")
 BallPrefab = ExtResource("1_b4etn")
 PathContainer = NodePath("WallContainer")
+IntroDialogue = NodePath("HUD/OpeningDialog")
 HUD = NodePath("HUD/Hud")
+StoryData = ExtResource("3_x7o3u")
 
 [node name="Background" type="CanvasLayer" parent="." unique_id=1348307900]
 layer = -1
@@ -42,16 +46,23 @@ stretch_mode = 6
 [node name="WallContainer" type="StaticBody2D" parent="." unique_id=1519674388]
 
 [node name="Left" type="CollisionShape2D" parent="WallContainer" unique_id=1628805284]
+visible = false
 position = Vector2(-2.25, 935.5)
 shape = SubResource("RectangleShape2D_ce2sw")
 
 [node name="Right" type="CollisionShape2D" parent="WallContainer" unique_id=1721943902]
+visible = false
 position = Vector2(1067.5, 938)
 shape = SubResource("RectangleShape2D_kgtrg")
 
 [node name="Bottom" type="CollisionShape2D" parent="WallContainer" unique_id=2058373684]
+visible = false
 position = Vector2(530.5, 1888)
 shape = SubResource("RectangleShape2D_3mx00")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WallContainer" unique_id=1986030663]
+build_mode = 1
+polygon = PackedVector2Array(-4, -11, 7, 1924, 1080, 1927, 1080, 0)
 
 [node name="BallSpawner" type="Node2D" parent="." unique_id=577519519]
 
@@ -59,15 +70,16 @@ shape = SubResource("RectangleShape2D_3mx00")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1354177273]
 
-[node name="Hud" parent="HUD" unique_id=336195257 instance=ExtResource("3_kgtrg")]
+[node name="Hud" parent="HUD" unique_id=336195257 node_paths=PackedStringArray("SettingsPopup") instance=ExtResource("3_kgtrg")]
 mouse_filter = 2
-ElemTheme = ExtResource("5_ayclm")
+SettingsPopup = NodePath("../SettingPanel")
 
-[node name="SettingsButton" type="Button" parent="HUD" unique_id=941434743]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="OpeningDialog" parent="HUD" unique_id=1767316839 instance=ExtResource("6_ddu6w")]
 
-[node name="Managers" type="Node" parent="." unique_id=1010611509]
+[node name="SettingPanel" parent="HUD" unique_id=1447106065 instance=ExtResource("8_4fpor")]
+process_mode = 3
+visible = false
+IsInGame = true
 
 [node name="DeadlineArea" type="Area2D" parent="." unique_id=344099647]
 script = ExtResource("4_3mx00")
@@ -90,3 +102,5 @@ offset_bottom = 106.75
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.69803923, 0.13333334, 0.13333334, 0.48235294)
+
+[node name="Managers" type="Node" parent="DeadlineArea/CollisionShape2D" unique_id=1010611509]

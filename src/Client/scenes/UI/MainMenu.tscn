@@ -1,0 +1,290 @@
+[gd_scene format=3 uid="uid://d241f280trwyu"]
+
+[ext_resource type="Script" uid="uid://b2wnv5msgw6aq" path="res://scripts/UI/MainMenuController.cs" id="1_b1p1q"]
+[ext_resource type="Texture2D" uid="uid://b1xmwba0hb0ds" path="res://assets/textures/background/main_bg.png" id="2_s7yn2"]
+[ext_resource type="Texture2D" uid="uid://byqwqgjpxprgx" path="res://assets/textures/ui/game_title.png" id="3_5r3px"]
+[ext_resource type="Texture2D" uid="uid://dj8yhk8bsuj0" path="res://assets/textures/ui/start_btn.png" id="4_kgeya"]
+[ext_resource type="Texture2D" uid="uid://b1172bsagqm45" path="res://assets/textures/ui/lore_btn.png" id="5_qa57o"]
+[ext_resource type="Texture2D" uid="uid://bdsihmnprn6ha" path="res://assets/textures/ui/setting_btn.png" id="6_5r3px"]
+[ext_resource type="PackedScene" uid="uid://cp0rno2uwyivv" path="res://scenes/UI/SettingPanel.tscn" id="6_s7yn2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5r3px"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.7176471, 0.10980392, 0.10980392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgeya"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.7176471, 0.10980392, 0.10980392, 1)
+border_color = Color(0.8980392, 0.22352941, 0.20784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qa57o"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.5019608, 0.07450981, 0.07450981, 1)
+border_color = Color(0.8980392, 0.22352941, 0.20784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6lq7x"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.81336933, 0.13669196, 0.13431144, 1)
+border_color = Color(0.8980392, 0.22352941, 0.20784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n327r"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.6, 0.6, 0.6, 0.42745098)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.5882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfdnv"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.6, 0.6, 0.6, 0.83137256)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.5882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frhrr"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.6, 0.6, 0.6, 0.3254902)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.5882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elmld"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0)
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.5882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6kh0n"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0.7058824)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.5882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_av0jf"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0.42745098)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.5882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s7yn2"]
+size = Vector2(8, 8)
+
+[sub_resource type="Gradient" id="Gradient_5r3px"]
+colors = PackedColorArray(0, 0, 0, 0.6392157, 1, 1, 1, 0)
+
+[node name="MainMenu" type="Control" unique_id=960466600 node_paths=PackedStringArray("HighScoreLabel", "StartButton", "LibraryButton", "SettingsButton", "VersionLabel", "SettingsPopup")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b1p1q")
+HighScoreLabel = NodePath("ScoreBadge/HighScoreLabel")
+StartButton = NodePath("")
+LibraryButton = NodePath("MenuButtons/LibraryButton")
+SettingsButton = NodePath("SettingButton")
+VersionLabel = NodePath("VersionLabel")
+SettingsPopup = NodePath("SettingPanel")
+GameScenePath = "uid://csm6l6o88i8e6"
+LibraryScenePath = "uid://dcdgatvdceykf"
+
+[node name="Background" type="TextureRect" parent="." unique_id=1596388915]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_s7yn2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TitleLogo" type="TextureRect" parent="." unique_id=463537689]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -269.0
+offset_top = 58.0
+offset_right = 269.0
+offset_bottom = 1296.0
+grow_horizontal = 2
+pivot_offset = Vector2(269, 619)
+texture = ExtResource("3_5r3px")
+
+[node name="ScoreBadge" type="PanelContainer" parent="." unique_id=2085892027]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 56.0
+offset_right = 274.0
+offset_bottom = 121.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5r3px")
+
+[node name="HighScoreLabel" type="Label" parent="ScoreBadge" unique_id=721591948]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.9607843, 0.9411765, 1)
+theme_override_font_sizes/font_size = 32
+text = "最高功德：0"
+
+[node name="MenuButtons" type="VBoxContainer" parent="." unique_id=1746060704]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -540.0
+offset_right = 200.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+
+[node name="StartButton" type="Button" parent="MenuButtons" unique_id=561936044]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgeya")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qa57o")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6lq7x")
+text = "  踏上归途"
+icon = ExtResource("4_kgeya")
+expand_icon = true
+
+[node name="LibraryButton" type="Button" parent="MenuButtons" unique_id=873010935]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_focus_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_pressed_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_hover_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_n327r")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sfdnv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_frhrr")
+text = "   藏   经   阁"
+icon = ExtResource("5_qa57o")
+expand_icon = true
+
+[node name="SettingButton" type="Button" parent="." unique_id=1003342024]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -215.0
+offset_top = 30.0
+offset_right = -42.0
+offset_bottom = 147.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_focus_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_pressed_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_hover_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_elmld")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6kh0n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_av0jf")
+text = " 设置"
+icon = ExtResource("6_5r3px")
+flat = true
+expand_icon = true
+
+[node name="VersionLabel" type="Label" parent="." unique_id=1404942695]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -57.0
+offset_top = -35.0
+offset_right = -17.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.24313726, 0.15294118, 0.13725491, 0.43529412)
+theme_override_font_sizes/font_size = 20
+text = "【归元】 v 0.2.0"
+
+[node name="SettingPanel" parent="." unique_id=1447106065 instance=ExtResource("6_s7yn2")]
+visible = false
+layout_mode = 1
+
+[node name="InkParticles" type="CPUParticles2D" parent="." unique_id=21140105]
+position = Vector2(540, 0)
+amount = 12
+texture = SubResource("PlaceholderTexture2D_s7yn2")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(540, 1200)
+gravity = Vector2(20, 40)
+scale_amount_min = 0.5
+scale_amount_max = 1.5
+color_ramp = SubResource("Gradient_5r3px")
