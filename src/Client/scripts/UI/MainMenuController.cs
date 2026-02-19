@@ -46,6 +46,8 @@ public partial class MainMenuController : Control
 			tweenTitle.TweenProperty(_gameTitle, "scale", Vector2.One, 2.0f)
 				.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
 		}
+
+		AudioManager.Instance.PlayBGM("res://assets/audio/bgm/bgm_menu.mp3");
 	}
 
 	public override void _Notification(int what)

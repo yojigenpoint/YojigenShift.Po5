@@ -57,6 +57,8 @@ public partial class StageController : Node2D
 		SpawnInitialChaos();
 
 		CallDeferred(nameof(CheckAndStartGame));
+
+		AudioManager.Instance.PlayBGM("res://assets/audio/bgm/bgm_game.mp3");
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

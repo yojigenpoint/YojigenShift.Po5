@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 namespace YojigenShift.Po5.Scripts.Managers;
@@ -119,17 +120,33 @@ public partial class AudioManager : Node
 		player.Play();
 	}
 
-	public void PlayBGM(string path)
+	public void PlayBGM(string path, float crossfadeTime = 1.0f)
 	{
-		if (ResourceLoader.Exists(path))
+		if (!ResourceLoader.Exists(path))
 		{
-			_bgmPlayer.Stream = GD.Load<AudioStream>(path);
-			_bgmPlayer.Play();
+			GD.PrintErr($"[AudioManager] Cannot find the BGM: {path}");
+			return;
 		}
+
+		var newStream = GD.Load<AudioStream>(path);
+
+		if (_bgmPlayer.Stream == newStream && _bgmPlayer.Playing) return;
+
+		_bgmPlayer.Stream = newStream;
+		_bgmPlayer.Play();
+
+		_bgmPlayer.VolumeDb = -80f;
+		var tween = CreateTween();
+		float targetDb = (BGMVolume <= 0.001f) ? -80f : Mathf.LinearToDb(BGMVolume);
+		tween.TweenProperty(_bgmPlayer, "volume_db", targetDb, crossfadeTime);
 	}
 
-	public void StopBGM()
+	public void StopBGM(float fadeOutTime = 1.0f)
 	{
-		_bgmPlayer.Stop();
+		if (!_bgmPlayer.Playing) return;
+
+		var tween = CreateTween();
+		tween.TweenProperty(_bgmPlayer, "volume_db", -80f, fadeOutTime);
+		tween.TweenCallback(Callable.From(_bgmPlayer.Stop));
 	}
 }
