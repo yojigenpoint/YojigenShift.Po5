@@ -1,5 +1,6 @@
 using Godot;
 using YojigenShift.Po5.Scripts.Managers;
+using YojigenShift.YiFramework.Core;
 
 namespace YojigenShift.Po5.Scripts.UI;
 
@@ -7,10 +8,14 @@ public partial class SettingsController : Control
 {
 	[Export] public HSlider BGMSlider { get; set; }
 	[Export] public HSlider SFXSlider { get; set; }
+	[Export] public CheckButton PreviewToggle { get; set; }
+	[Export] public OptionButton LanguageSelect { get; set; }
 	[Export] public Button CloseButton { get; set; }
 	[Export] public Button QuitButton { get; set; } // "Return Main Menu" Button
 
 	[Export] public bool IsInGame { get; set; } = false;
+
+	[Signal] public delegate void PreviewToggledEventHandler(bool isOn);
 
 	public override void _Ready()
 	{
@@ -24,6 +29,19 @@ public partial class SettingsController : Control
 		{
 			SFXSlider.Value = AudioManager.Instance.SFXVolume;
 			SFXSlider.ValueChanged += OnSFXChanged;
+		}
+
+		if (PreviewToggle != null)
+		{
+			PreviewToggle.ButtonPressed = true;
+			PreviewToggle.Toggled += OnPreviewToggled;
+		}
+
+		if (LanguageSelect != null)
+		{
+			string currentLocale = TranslationServer.GetLocale();
+			LanguageSelect.Selected = currentLocale.StartsWith("zh") ? 0 : 1;
+			LanguageSelect.ItemSelected += OnLanguageSelected;
 		}
 
 		if (CloseButton != null) CloseButton.Pressed += ClosePanel;
@@ -75,5 +93,16 @@ public partial class SettingsController : Control
 			SceneManager.Instance.ChangeScene("res://scenes/UI/MainMenu.tscn");
 		else
 			GetTree().ChangeSceneToFile("res://scenes/UI/MainMenu.tscn");
+	}
+	private void OnPreviewToggled(bool isOn)
+	{
+		EmitSignal(SignalName.PreviewToggled, isOn);
+	}
+
+	private void OnLanguageSelected(long index)
+	{
+		string locale = (index == 0) ? "zh_CN" : "en_US";
+		TranslationServer.SetLocale(locale);
+		YiLocalization.CurrentLanguage = locale;
 	}
 }

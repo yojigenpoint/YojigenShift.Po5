@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bknpwhvvtpqkk" path="res://scripts/UI/SettingsController.cs" id="1_jmakk"]
 [ext_resource type="Texture2D" uid="uid://yjuiu0fat87w" path="res://assets/textures/ui/game_bg.png" id="2_mo1bt"]
 
-[node name="SettingPanel" type="Control" unique_id=1447106065 node_paths=PackedStringArray("BGMSlider", "SFXSlider", "CloseButton", "QuitButton")]
+[node name="SettingPanel" type="Control" unique_id=1447106065 node_paths=PackedStringArray("BGMSlider", "SFXSlider", "PreviewToggle", "LanguageSelect", "CloseButton", "QuitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,8 +11,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jmakk")
-BGMSlider = NodePath("NinePatchRect/MusicSettings/BGMSlider")
-SFXSlider = NodePath("NinePatchRect/SFXSettings/SFXSlider")
+BGMSlider = NodePath("NinePatchRect/SettingContent/MusicSettings/BGMSlider")
+SFXSlider = NodePath("NinePatchRect/SettingContent/SFXSettings/SFXSlider")
+PreviewToggle = NodePath("NinePatchRect/SettingContent/PreveiwToggle")
+LanguageSelect = NodePath("NinePatchRect/SettingContent/LanguageSelect")
 CloseButton = NodePath("NinePatchRect/CloseButton")
 QuitButton = NodePath("NinePatchRect/QuitButton")
 
@@ -53,63 +55,77 @@ offset_bottom = 136.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_font_sizes/font_size = 80
-text = "Setting"
+text = "SETTING_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MusicSettings" type="HBoxContainer" parent="NinePatchRect" unique_id=1284241519]
-custom_minimum_size = Vector2(300, 0)
+[node name="SettingContent" type="VBoxContainer" parent="NinePatchRect" unique_id=1663828101]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.40300003
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.40300003
 offset_left = -150.0
-offset_top = -126.0
+offset_top = -193.00003
 offset_right = 150.0
-offset_bottom = -86.0
+offset_bottom = 192.99997
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 50
+alignment = 1
 
-[node name="Label" type="Label" parent="NinePatchRect/MusicSettings" unique_id=168125738]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-theme_override_font_sizes/font_size = 40
-text = "Music"
-
-[node name="BGMSlider" type="HSlider" parent="NinePatchRect/MusicSettings" unique_id=288800764]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-
-[node name="SFXSettings" type="HBoxContainer" parent="NinePatchRect" unique_id=1287505826]
+[node name="MusicSettings" type="HBoxContainer" parent="NinePatchRect/SettingContent" unique_id=1284241519]
 custom_minimum_size = Vector2(300, 0)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="NinePatchRect/SFXSettings" unique_id=55508387]
+[node name="Label" type="Label" parent="NinePatchRect/SettingContent/MusicSettings" unique_id=168125738]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_font_sizes/font_size = 40
-text = "SFX    "
+text = "UI_MUSIC"
 
-[node name="SFXSlider" type="HSlider" parent="NinePatchRect/SFXSettings" unique_id=1699133230]
+[node name="BGMSlider" type="HSlider" parent="NinePatchRect/SettingContent/MusicSettings" unique_id=288800764]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+
+[node name="SFXSettings" type="HBoxContainer" parent="NinePatchRect/SettingContent" unique_id=1287505826]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="NinePatchRect/SettingContent/SFXSettings" unique_id=55508387]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 40
+text = "UI_SFX"
+
+[node name="SFXSlider" type="HSlider" parent="NinePatchRect/SettingContent/SFXSettings" unique_id=1699133230]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="PreveiwToggle" type="CheckButton" parent="NinePatchRect/SettingContent" unique_id=1317292942]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_focus_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_pressed_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/font_hover_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 40
+text = "UI_PREVIEW"
+
+[node name="LanguageSelect" type="OptionButton" parent="NinePatchRect/SettingContent" unique_id=433366361]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+alignment = 1
+selected = 0
+item_count = 2
+popup/item_0/text = "中文"
+popup/item_0/id = 0
+popup/item_1/text = "English"
+popup/item_1/id = 1
 
 [node name="CloseButton" type="Button" parent="NinePatchRect" unique_id=1603188088]
 custom_minimum_size = Vector2(200, 100)
@@ -126,7 +142,7 @@ offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
-text = "Close"
+text = "BTN_CLOSE"
 
 [node name="QuitButton" type="Button" parent="NinePatchRect" unique_id=1692022188]
 custom_minimum_size = Vector2(200, 100)
@@ -144,4 +160,4 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.69803923, 0.13333334, 0.13333334, 1)
 theme_override_font_sizes/font_size = 50
-text = "Back"
+text = "BTN_BACK"

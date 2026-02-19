@@ -6,16 +6,102 @@
 [ext_resource type="Resource" uid="uid://cv2yy6up3nb7u" path="res://assets/resources/Story.tres" id="3_5ip4n"]
 [ext_resource type="Texture2D" uid="uid://bqfgxy17fsv25" path="res://assets/textures/ui/text_bg.png" id="4_0qpk7"]
 [ext_resource type="Texture2D" uid="uid://bg8efwscqkbyk" path="res://assets/textures/ui/dialog_bg.png" id="5_ucsqe"]
-[ext_resource type="Texture2D" uid="uid://mgr0scwxg1f7" path="res://assets/textures/ui/stamp_bg.png" id="6_ucsqe"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7n4fj"]
 font_size = 64
 
 [sub_resource type="LabelSettings" id="LabelSettings_5fyfn"]
-font_size = 100
-font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+font_size = 64
+font_color = Color(0.24313726, 0.15294118, 0.13725491, 1)
+shadow_size = 2
+shadow_color = Color(0.7372549, 0.6666667, 0.6431373, 1)
+shadow_offset = Vector2(2, 2)
 
-[node name="Hud" type="Control" unique_id=336195257 node_paths=PackedStringArray("ScoreLabel", "HighScoreLabel", "PauseButton", "GameOverPanel", "GameOverTitle", "GameOverMessage", "RestartButton", "NextBallContainer", "NextBallPreview", "PreviewToggle")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgeya"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.7176471, 0.10980392, 0.10980392, 1)
+border_color = Color(0.8980392, 0.22352941, 0.20784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qa57o"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.5019608, 0.07450981, 0.07450981, 1)
+border_color = Color(0.8980392, 0.22352941, 0.20784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6lq7x"]
+content_margin_left = 40.0
+content_margin_top = 20.0
+content_margin_right = 40.0
+content_margin_bottom = 20.0
+bg_color = Color(0.81336933, 0.13669196, 0.13431144, 1)
+border_color = Color(0.8980392, 0.22352941, 0.20784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qpk7"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24313726, 0.15294118, 0.13725491, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucsqe"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0.0627451)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.21912265, 0.13603935, 0.12159454, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0qax"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28264466, 0.18086314, 0.1631521, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Hud" type="Control" unique_id=336195257 node_paths=PackedStringArray("ScoreLabel", "HighScoreLabel", "PauseButton", "GameOverPanel", "GameOverTitle", "GameOverScore", "GameOverMessage", "RestartButton", "MainMenuButton", "NextBallContainer", "NextBallPreview")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,12 +113,13 @@ ScoreLabel = NodePath("Scores/ScoreLabel")
 HighScoreLabel = NodePath("HighScores/HighScoreLabel")
 PauseButton = NodePath("PauseButton")
 GameOverPanel = NodePath("GameOverPanel")
-GameOverTitle = NodePath("GameOverPanel/TitleLabel")
-GameOverMessage = NodePath("GameOverPanel/MessageLabel")
-RestartButton = NodePath("")
+GameOverTitle = NodePath("GameOverPanel/PaperBg/ContentBox/TitleLabel")
+GameOverScore = NodePath("GameOverPanel/PaperBg/ContentBox/Score")
+GameOverMessage = NodePath("GameOverPanel/PaperBg/ContentBox/MessageLabel")
+RestartButton = NodePath("GameOverPanel/PaperBg/ContentBox/RestartButton")
+MainMenuButton = NodePath("GameOverPanel/PaperBg/ContentBox/BackButton")
 NextBallContainer = NodePath("NextBallPanel")
 NextBallPreview = NodePath("NextBallPanel/PreviewRect")
-PreviewToggle = NodePath("TogglePreview")
 ElemTheme = ExtResource("2_vphgt")
 StoryData = ExtResource("3_5ip4n")
 
@@ -57,7 +144,7 @@ offset_left = -114.5
 offset_right = 114.5
 offset_bottom = 89.0
 grow_horizontal = 2
-text = "功德：0"
+text = "TXT_SCORE"
 label_settings = SubResource("LabelSettings_7n4fj")
 
 [node name="HighScores" type="TextureRect" parent="." unique_id=1575550721]
@@ -85,7 +172,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
 theme_override_font_sizes/font_size = 35
-text = "记录：0"
+text = "TXT_HIGH_SCORE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -110,7 +197,7 @@ offset_right = 20.0
 offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Next"
+text = "TXT_NEXT_BALL"
 
 [node name="PreviewRect" type="TextureRect" parent="NextBallPanel" unique_id=1847683963]
 custom_minimum_size = Vector2(40, 40)
@@ -124,14 +211,6 @@ texture = ExtResource("2_7n4fj")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="TogglePreview" type="CheckButton" parent="." unique_id=1009270474]
-layout_mode = 0
-offset_left = 132.0
-offset_top = 30.0
-offset_right = 242.0
-offset_bottom = 61.0
-text = "Preview"
-
 [node name="PauseButton" type="Button" parent="." unique_id=1891975482]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
@@ -142,87 +221,109 @@ offset_bottom = 126.0
 theme_override_font_sizes/font_size = 50
 text = "II"
 
-[node name="GameOverPanel" type="NinePatchRect" parent="." unique_id=317389623]
+[node name="GameOverPanel" type="Control" parent="." unique_id=1915327307]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_ucsqe")
-patch_margin_left = 80
-patch_margin_top = 50
-patch_margin_right = 50
-patch_margin_bottom = 80
 
-[node name="TitleLabel" type="Label" parent="GameOverPanel" unique_id=1885747627]
+[node name="Bakground" type="ColorRect" parent="GameOverPanel" unique_id=1711936703]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7372549)
+
+[node name="PaperBg" type="NinePatchRect" parent="GameOverPanel" unique_id=2115470466]
+custom_minimum_size = Vector2(850, 1200)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -271.5
-offset_top = -193.0
-offset_right = 271.5
-offset_bottom = -56.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Game Over"
+texture = ExtResource("5_ucsqe")
+patch_margin_left = 40
+patch_margin_top = 80
+patch_margin_right = 40
+patch_margin_bottom = 80
+
+[node name="ContentBox" type="VBoxContainer" parent="GameOverPanel/PaperBg" unique_id=179568953]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -475.0
+offset_right = 325.0
+offset_bottom = 475.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="GameOverPanel/PaperBg/ContentBox" unique_id=1885747627]
+layout_mode = 2
+text = "GAME_OVER_TITLE"
 label_settings = SubResource("LabelSettings_5fyfn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MessageLabel" type="Label" parent="GameOverPanel" unique_id=185349699]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -340.0
-offset_top = -11.5
-offset_right = 359.0
-offset_bottom = 219.27026
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-theme_override_font_sizes/font_size = 50
-text = "Message"
+[node name="HSeparator" type="HSeparator" parent="GameOverPanel/PaperBg/ContentBox" unique_id=482542850]
+layout_mode = 2
+
+[node name="Score" type="Label" parent="GameOverPanel/PaperBg/ContentBox" unique_id=1699399226]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24313726, 0.15294118, 0.13725491, 1)
+theme_override_font_sizes/font_size = 80
+text = "TXT_SCORE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RestartButton" type="TextureButton" parent="GameOverPanel" unique_id=825435445]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -151.76178
-offset_top = 367.0
-offset_right = 151.76178
-offset_bottom = 565.0
-grow_horizontal = 2
-grow_vertical = 2
-texture_normal = ExtResource("6_ucsqe")
-texture_pressed = ExtResource("6_ucsqe")
-ignore_texture_size = true
-stretch_mode = 5
+[node name="HSeparator2" type="HSeparator" parent="GameOverPanel/PaperBg/ContentBox" unique_id=1590188530]
+layout_mode = 2
 
-[node name="Label" type="Label" parent="GameOverPanel/RestartButton" unique_id=181207371]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -0.5
-offset_top = -11.5
-offset_right = 0.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-theme_override_font_sizes/font_size = 50
-text = "Restart"
+[node name="MessageLabel" type="Label" parent="GameOverPanel/PaperBg/ContentBox" unique_id=185349699]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3647059, 0.2509804, 0.21568628, 1)
+theme_override_font_sizes/font_size = 32
+text = "Message"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RestartButton" type="Button" parent="GameOverPanel/PaperBg/ContentBox" unique_id=937830766]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_kgeya")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qa57o")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6lq7x")
+text = "BTN_RESTART"
+
+[node name="BackButton" type="Button" parent="GameOverPanel/PaperBg/ContentBox" unique_id=1505167577]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.24313726, 0.15294118, 0.13725491, 1)
+theme_override_colors/font_pressed_color = Color(0.2122862, 0.13123628, 0.11714607, 1)
+theme_override_colors/font_hover_color = Color(0.318949, 0.2066806, 0.18713212, 1)
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_0qpk7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ucsqe")
+theme_override_styles/hover = SubResource("StyleBoxFlat_a0qax")
+text = "BTN_BACK"

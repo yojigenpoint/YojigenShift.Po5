@@ -19,7 +19,15 @@ size = Vector2(3, 1896)
 size = Vector2(1080, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c37fm"]
-size = Vector2(1077, 229.5)
+size = Vector2(1077, 381.75)
+
+[sub_resource type="Gradient" id="Gradient_x7o3u"]
+offsets = PackedFloat32Array(0, 0.98493975)
+colors = PackedColorArray(1, 0, 0, 0.78431374, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4fpor"]
+gradient = SubResource("Gradient_x7o3u")
+fill_to = Vector2(0, 1)
 
 [node name="GameStage" type="Node2D" unique_id=238200124 node_paths=PackedStringArray("PathContainer", "IntroDialogue", "HUD")]
 script = ExtResource("1_ce2sw")
@@ -81,26 +89,31 @@ process_mode = 3
 visible = false
 IsInGame = true
 
-[node name="DeadlineArea" type="Area2D" parent="." unique_id=344099647]
+[node name="DeadlineArea" type="Area2D" parent="." unique_id=344099647 node_paths=PackedStringArray("VisualWarning")]
 script = ExtResource("4_3mx00")
+VisualWarning = NodePath("CollisionShape2D/ColorRect")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeadlineArea" unique_id=1631821747]
-position = Vector2(533, 180.25)
+position = Vector2(533, 186.125)
 shape = SubResource("RectangleShape2D_c37fm")
-debug_color = Color(0.8331484, 0.32052642, 0.580624, 0.41960785)
+debug_color = Color(0.83137256, 0.32156864, 0.5803922, 0)
 
-[node name="ColorRect" type="ColorRect" parent="DeadlineArea/CollisionShape2D" unique_id=154146574]
+[node name="ColorRect" type="TextureRect" parent="DeadlineArea/CollisionShape2D" unique_id=1789819030]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -519.0
-offset_top = -116.25
-offset_right = 523.0
-offset_bottom = 106.75
+offset_left = -533.0
+offset_top = -186.125
+offset_right = 547.0
+offset_bottom = 198.875
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.69803923, 0.13333334, 0.13333334, 0.48235294)
+texture = SubResource("GradientTexture2D_4fpor")
+metadata/_edit_use_anchors_ = true
 
 [node name="Managers" type="Node" parent="DeadlineArea/CollisionShape2D" unique_id=1010611509]
+
+[connection signal="PreviewToggled" from="HUD/SettingPanel" to="HUD/Hud" method="_on_setting_panel_preview_toggled"]

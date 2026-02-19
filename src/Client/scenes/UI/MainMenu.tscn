@@ -145,7 +145,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b1p1q")
 HighScoreLabel = NodePath("ScoreBadge/HighScoreLabel")
-StartButton = NodePath("")
+StartButton = NodePath("MenuButtons/StartButton")
 LibraryButton = NodePath("MenuButtons/LibraryButton")
 SettingsButton = NodePath("SettingButton")
 VersionLabel = NodePath("VersionLabel")
@@ -189,7 +189,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_5r3px")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96862745, 0.9607843, 0.9411765, 1)
 theme_override_font_sizes/font_size = 32
-text = "最高功德：0"
+text = "TXT_HIGH_SCORE"
 
 [node name="MenuButtons" type="VBoxContainer" parent="." unique_id=1746060704]
 layout_mode = 1
@@ -213,7 +213,7 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_kgeya")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qa57o")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6lq7x")
-text = "  踏上归途"
+text = "UI_START"
 icon = ExtResource("4_kgeya")
 expand_icon = true
 
@@ -228,7 +228,7 @@ theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = SubResource("StyleBoxFlat_n327r")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_sfdnv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_frhrr")
-text = "   藏   经   阁"
+text = "UI_LORE"
 icon = ExtResource("5_qa57o")
 expand_icon = true
 
@@ -251,7 +251,7 @@ theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = SubResource("StyleBoxFlat_elmld")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_6kh0n")
 theme_override_styles/hover = SubResource("StyleBoxFlat_av0jf")
-text = " 设置"
+text = "UI_SETTINGS"
 icon = ExtResource("6_5r3px")
 flat = true
 expand_icon = true
@@ -271,7 +271,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.24313726, 0.15294118, 0.13725491, 0.43529412)
 theme_override_font_sizes/font_size = 20
-text = "【归元】 v 0.2.0"
+text = "TXT_VERSION"
 
 [node name="SettingPanel" parent="." unique_id=1447106065 instance=ExtResource("6_s7yn2")]
 visible = false
