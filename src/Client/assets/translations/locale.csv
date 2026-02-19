@@ -1,0 +1,17 @@
+keys,zh_CN,en_US
+UI_START,  踏上归途,  Start Journey
+UI_LORE,   藏   经   阁,   Lore
+UI_SETTINGS, 设置, Setting
+UI_MUSIC,音  乐,Music
+UI_SFX,音  效,SFX    
+UI_PREVIEW,天  眼,Preview
+BTN_CLOSE,关  闭,Close
+BTN_BACK,首  页,Home
+BTN_RESTART,重  来,Restart
+SETTING_TITLE,设    置,Setting
+GAME_OVER_WIN,功德圆满！,Nirvana！
+GAME_OVER_LOSE,胜败乃兵家常事,So Close! Try Again!
+TXT_NEXT_BALL,下一个,Next
+TXT_SCORE,功德：{0},Merit: {0}
+TXT_HIGH_SCORE,最高：{0},Best: {0}
+TXT_VERSION,【归元】v 0.4.0,(Return) v 0.4.0

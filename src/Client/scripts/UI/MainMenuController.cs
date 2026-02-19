@@ -48,19 +48,23 @@ public partial class MainMenuController : Control
 		}
 	}
 
+	public override void _Notification(int what)
+	{
+		if (what == NotificationTranslationChanged)
+			UpdateHighScore();
+	}
+
 	private void UpdateHighScore()
 	{
 		if (HighScoreLabel != null && GameManager.Instance != null)
 		{
-			HighScoreLabel.Text = $"最高功德: {GameManager.Instance.HighScore}";
+			HighScoreLabel.Text = Helpers.GetLocalizedFormat(Tr("TXT_HIGH_SCORE"), GameManager.Instance.HighScore);
 		}
 	}
 
 	private void OnStartPressed()
 	{
 		AudioManager.Instance.PlaySFX("ui_click");
-
-		GD.Print("[MainMenu] Start Game Pressed");
 
 		if (SceneManager.Instance != null)
 		{

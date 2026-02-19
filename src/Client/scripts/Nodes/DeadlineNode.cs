@@ -8,39 +8,51 @@ namespace YojigenShift.Po5.Scripts.Nodes;
 /// </summary>
 public partial class DeadlineNode : Area2D
 {
-	[Export] public float TimeLimit { get; set; } = 2.0f; // Seconds before Game Over
+	[Export] public float TimeLimit { get; set; } = 3.0f; // Seconds before Game Over
+	[Export] public TextureRect VisualWarning { get; set; }
 
 	private float _timer = 0f;
-	private int _ballsInZone = 0;
-	private ColorRect _visualLine; // Optional: To flash red
+	private const float VelocityThreshold = 10.0f; // Minimum speed to be considered "moving"
 
 	public override void _Ready()
 	{
-		BodyEntered += OnBodyEntered;
-		BodyExited += OnBodyExited;
-
-		// Optional: Find a visual child to animate
-		_visualLine = GetNodeOrNull<ColorRect>("ColorRect");
+		if (VisualWarning != null)
+			VisualWarning.Modulate = new Color(1, 1, 1, 0); // Start invisible
 	}
 
 	public override void _Process(double delta)
 	{
 		if (GameManager.Instance.IsGameOver) return;
 
-		// Only count down if balls are in the zone AND they are mostly stopped (sleeping)
-		// But checking sleeping is tricky. For prototype, just checking presence is enough.
-		// We should ensure we don't count the ball currently being spawned/falling through.
-		// (Typically balls spawn *above* the line. If they pile up *to* the line, that's game over)
+		bool dangerDetected = false;
 
-		if (_ballsInZone > 0)
+		var bodies = GetOverlappingBodies();
+
+		foreach (var body in bodies)
+		{
+			if (body is BallNode ball)
+			{
+				if (ball.LinearVelocity.Length() < VelocityThreshold)
+				{
+					dangerDetected = true;
+					break;
+				}
+			}
+		}
+
+		if (dangerDetected)
 		{
 			_timer += (float)delta;
 
+			float dangerLevel = Mathf.Clamp(_timer / TimeLimit, 0f, 1f);
+
 			// Visual warning (Flash Red)
-			if (_visualLine != null)
+			if (VisualWarning != null)
 			{
-				float flash = Mathf.Sin(_timer * 10) * 0.5f + 0.5f;
-				_visualLine.Color = new Color(1, 0, 0, flash * 0.5f);
+				float baseAlpha = dangerLevel * 0.8f;
+				float flash = (Mathf.Sin(_timer * 10) * 0.5f + 0.5f) * 0.2f;
+				
+				VisualWarning.Modulate = new Color(1, 1, 1, baseAlpha + flash);
 			}
 
 			if (_timer >= TimeLimit)
@@ -51,26 +63,8 @@ public partial class DeadlineNode : Area2D
 		else
 		{
 			_timer = 0f;
-			if (_visualLine != null) _visualLine.Color = new Color(1, 0, 0, 0); // Hide
-		}
-	}
-
-	private void OnBodyEntered(Node body)
-	{
-		if (body is BallNode)
-		{
-			// Verify if the ball is actually settled? 
-			// For simplified logic: Any ball touching the line counts.
-			_ballsInZone++;
-		}
-	}
-
-	private void OnBodyExited(Node body)
-	{
-		if (body is BallNode)
-		{
-			_ballsInZone--;
-			if (_ballsInZone < 0) _ballsInZone = 0; // Safety clamp
+			if (VisualWarning != null) 
+				VisualWarning.Modulate = VisualWarning.Modulate.Lerp(new Color(1, 1, 1, 0), (float)delta * 5);
 		}
 	}
 }

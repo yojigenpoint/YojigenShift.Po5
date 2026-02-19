@@ -38,6 +38,10 @@ project/assembly_name="Client"
 
 pointing/emulate_touch_from_mouse=true
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/translations/locale.en_US.translation", "res://assets/translations/locale.zh_CN.translation")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
