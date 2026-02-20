@@ -125,6 +125,9 @@ public partial class HUDController : Control
 	{
 		if (GameOverPanel == null) return;
 
+		AudioManager.Instance.StopBGM(2.0f);
+		AudioManager.Instance.PlaySFX("game_over");
+
 		GameOverPanel.Visible = true;
 
 		var paper = GameOverPanel.GetNodeOrNull<Control>("PaperBg");
@@ -175,6 +178,7 @@ public partial class HUDController : Control
 
 	private void OnRestartClicked()
 	{
+		AudioManager.Instance.PlaySFX("click");
 		GameOverPanel.Visible = false;
 		GameManager.Instance.ResetGame();
 		GetTree().ReloadCurrentScene();

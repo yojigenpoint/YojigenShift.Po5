@@ -180,6 +180,8 @@ public partial class StageController : Node2D
 
 		ballInstance.Setup(_nextElementType);
 
+		AudioManager.Instance.PlaySFX("spawn");
+
 		_nextElementType = GetRandomElement();
 		EmitSignal(SignalName.NextBallChanged, (int)_nextElementType);
 	}

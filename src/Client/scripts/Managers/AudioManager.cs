@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 namespace YojigenShift.Po5.Scripts.Managers;
@@ -12,8 +11,8 @@ public partial class AudioManager : Node
 {
 	public static AudioManager Instance { get; private set; }
 
-	public float BGMVolume { get; private set; } = 1.0f;
-	public float SFXVolume { get; private set; } = 1.0f;
+	public bool IsBGMEnabled { get; private set; } = true;
+	public bool IsSFXEnabled { get; private set; } = true;
 
 	private AudioStreamPlayer _bgmPlayer;
 	private List<AudioStreamPlayer> _sfxPool = new List<AudioStreamPlayer>();
@@ -23,6 +22,17 @@ public partial class AudioManager : Node
 	// Cache loaded sounds so we don't load from disk every time
 	private Dictionary<string, AudioStream> _soundLibrary = new Dictionary<string, AudioStream>();
 
+	private readonly Dictionary<string, string> _sfxPaths = new()
+	{
+		{ "click", "res://assets/audio/sfx/ui_click.ogg" },
+		{ "popup", "res://assets/audio/sfx/ui_popup.ogg" },
+		{ "merge", "res://assets/audio/sfx/merge.ogg" },
+		{ "destroy", "res://assets/audio/sfx/destroy.ogg" },
+		{ "spawn", "res://assets/audio/sfx/spawn.ogg" },
+		{ "warning", "res://assets/audio/sfx/warning.wav" },
+		{ "game_over", "res://assets/audio/sfx/game_over.wav" }
+	};
+
 	public override void _Ready()
 	{
 		if (Instance == null) Instance = this;
@@ -30,11 +40,7 @@ public partial class AudioManager : Node
 
 		InitializeBGM();
 		InitializeSFXPool();
-
-		// TODO: Load your actual sound files here
-		// LoadSound("spawn", "res://assets/audio/spawn.wav");
-		// LoadSound("merge", "res://assets/audio/merge.wav");
-		// LoadSound("gameover", "res://assets/audio/gameover.wav");
+		LoadAllSounds();
 	}
 
 	private void InitializeBGM()
@@ -57,21 +63,19 @@ public partial class AudioManager : Node
 		}
 	}
 
-	public void SetBGMVolume(float value)
+	public void SetBGMEnabled(bool enabled)
 	{
-		BGMVolume = Mathf.Clamp(value, 0f, 1f);
-		float db = (value <= 0.001f) ? -80f : Mathf.LinearToDb(value);
-		_bgmPlayer.VolumeDb = db;
+		IsBGMEnabled = enabled;
+		_bgmPlayer.VolumeDb = enabled ? 0f : -80f;
 	}
 
-	public void SetSFXVolume(float value)
+	public void SetSFXEnabled(bool enabled)
 	{
-		SFXVolume = Mathf.Clamp(value, 0f, 1f);
-		float db = (value <= 0.001f) ? -80f : Mathf.LinearToDb(value);
+		IsSFXEnabled = enabled;
 
 		foreach (var player in _sfxPool)
 		{
-			player.VolumeDb = db;
+			player.VolumeDb = enabled ? 0f : -80f;
 		}
 	}
 
@@ -96,16 +100,14 @@ public partial class AudioManager : Node
 	/// </summary>
 	public void PlaySFX(string key, float pitchRange = 0.1f)
 	{
-		if (!_soundLibrary.ContainsKey(key)) return;
+		if (!IsSFXEnabled || !_soundLibrary.ContainsKey(key)) return;
 
 		// Get next available player in pool
 		var player = _sfxPool[_poolIndex];
 		_poolIndex = (_poolIndex + 1) % _poolSize;
 
 		player.Stream = _soundLibrary[key];
-
-		float db = (SFXVolume <= 0.001f) ? -80f : Mathf.LinearToDb(SFXVolume);
-		player.VolumeDb = db;
+		player.VolumeDb = 0f;
 
 		// Randomize pitch slightly to make it sound less repetitive
 		if (pitchRange > 0)
@@ -136,8 +138,9 @@ public partial class AudioManager : Node
 		_bgmPlayer.Play();
 
 		_bgmPlayer.VolumeDb = -80f;
+		float targetDb = IsBGMEnabled ? 0f : -80f;
+		
 		var tween = CreateTween();
-		float targetDb = (BGMVolume <= 0.001f) ? -80f : Mathf.LinearToDb(BGMVolume);
 		tween.TweenProperty(_bgmPlayer, "volume_db", targetDb, crossfadeTime);
 	}
 
@@ -148,5 +151,16 @@ public partial class AudioManager : Node
 		var tween = CreateTween();
 		tween.TweenProperty(_bgmPlayer, "volume_db", -80f, fadeOutTime);
 		tween.TweenCallback(Callable.From(_bgmPlayer.Stop));
+	}
+
+	private void LoadAllSounds()
+	{
+		foreach (var kvp in _sfxPaths)
+		{
+			if (ResourceLoader.Exists(kvp.Value))
+				_soundLibrary[kvp.Key] = GD.Load<AudioStream>(kvp.Value);
+			else
+				GD.PrintErr($"[AudioManager] Cannot find the SFX: {kvp.Value} (Please check the path and extension)");
+		}
 	}
 }

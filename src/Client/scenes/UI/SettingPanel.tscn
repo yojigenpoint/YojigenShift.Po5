@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bknpwhvvtpqkk" path="res://scripts/UI/SettingsController.cs" id="1_jmakk"]
 [ext_resource type="Texture2D" uid="uid://yjuiu0fat87w" path="res://assets/textures/ui/game_bg.png" id="2_mo1bt"]
 
-[node name="SettingPanel" type="Control" unique_id=1447106065 node_paths=PackedStringArray("BGMSlider", "SFXSlider", "PreviewToggle", "LanguageSelect", "CloseButton", "QuitButton")]
+[node name="SettingPanel" type="Control" unique_id=1447106065 node_paths=PackedStringArray("BGMToggle", "SFXToggle", "PreviewToggle", "LanguageSelect", "CloseButton", "QuitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,9 +11,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jmakk")
-BGMSlider = NodePath("NinePatchRect/SettingContent/MusicSettings/BGMSlider")
-SFXSlider = NodePath("NinePatchRect/SettingContent/SFXSettings/SFXSlider")
-PreviewToggle = NodePath("NinePatchRect/SettingContent/PreveiwToggle")
+BGMToggle = NodePath("NinePatchRect/SettingContent/MusicSettings/BGMToggle")
+SFXToggle = NodePath("NinePatchRect/SettingContent/SFXSettings/SFXToggle")
+PreviewToggle = NodePath("NinePatchRect/SettingContent/PreviewToggle/PreveiwToggle")
 LanguageSelect = NodePath("NinePatchRect/SettingContent/LanguageSelect")
 CloseButton = NodePath("NinePatchRect/CloseButton")
 QuitButton = NodePath("NinePatchRect/QuitButton")
@@ -85,11 +85,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_font_sizes/font_size = 40
 text = "UI_MUSIC"
+vertical_alignment = 1
 
-[node name="BGMSlider" type="HSlider" parent="NinePatchRect/SettingContent/MusicSettings" unique_id=288800764]
+[node name="BGMToggle" type="CheckButton" parent="NinePatchRect/SettingContent/MusicSettings" unique_id=1431907341]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
 
 [node name="SFXSettings" type="HBoxContainer" parent="NinePatchRect/SettingContent" unique_id=1287505826]
 custom_minimum_size = Vector2(300, 0)
@@ -101,23 +101,35 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_font_sizes/font_size = 40
 text = "UI_SFX"
+vertical_alignment = 1
 
-[node name="SFXSlider" type="HSlider" parent="NinePatchRect/SettingContent/SFXSettings" unique_id=1699133230]
+[node name="SFXToggle" type="CheckButton" parent="NinePatchRect/SettingContent/SFXSettings" unique_id=2105492819]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
 
-[node name="PreveiwToggle" type="CheckButton" parent="NinePatchRect/SettingContent" unique_id=1317292942]
+[node name="PreviewToggle" type="HBoxContainer" parent="NinePatchRect/SettingContent" unique_id=677405031]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/SettingContent/PreviewToggle" unique_id=1151360948]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_font_sizes/font_size = 40
+text = "UI_PREVIEW"
+vertical_alignment = 1
+
+[node name="PreveiwToggle" type="CheckButton" parent="NinePatchRect/SettingContent/PreviewToggle" unique_id=1317292942]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_colors/font_focus_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_colors/font_pressed_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_colors/font_hover_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 theme_override_font_sizes/font_size = 40
-text = "UI_PREVIEW"
 
 [node name="LanguageSelect" type="OptionButton" parent="NinePatchRect/SettingContent" unique_id=433366361]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
 alignment = 1
 selected = 0

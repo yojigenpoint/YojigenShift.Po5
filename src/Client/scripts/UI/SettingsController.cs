@@ -6,8 +6,8 @@ namespace YojigenShift.Po5.Scripts.UI;
 
 public partial class SettingsController : Control
 {
-	[Export] public HSlider BGMSlider { get; set; }
-	[Export] public HSlider SFXSlider { get; set; }
+	[Export] public CheckButton BGMToggle { get; set; }
+	[Export] public CheckButton SFXToggle { get; set; }
 	[Export] public CheckButton PreviewToggle { get; set; }
 	[Export] public OptionButton LanguageSelect { get; set; }
 	[Export] public Button CloseButton { get; set; }
@@ -19,16 +19,16 @@ public partial class SettingsController : Control
 
 	public override void _Ready()
 	{
-		if (BGMSlider != null)
+		if (BGMToggle != null)
 		{
-			BGMSlider.Value = AudioManager.Instance.BGMVolume;
-			BGMSlider.ValueChanged += OnBGMChanged;
+			BGMToggle.ButtonPressed = AudioManager.Instance.IsBGMEnabled;
+			BGMToggle.Toggled += (isOn) => AudioManager.Instance.SetBGMEnabled(isOn);
 		}
 
-		if (SFXSlider != null)
+		if (SFXToggle != null)
 		{
-			SFXSlider.Value = AudioManager.Instance.SFXVolume;
-			SFXSlider.ValueChanged += OnSFXChanged;
+			SFXToggle.ButtonPressed = AudioManager.Instance.IsSFXEnabled;
+			SFXToggle.Toggled += (isOn) => AudioManager.Instance.SetSFXEnabled(isOn);
 		}
 
 		if (PreviewToggle != null)
@@ -57,6 +57,7 @@ public partial class SettingsController : Control
 
 	public void Open()
 	{
+		AudioManager.Instance.PlaySFX("popup");
 		Visible = true;
 
 		if (IsInGame)
@@ -67,6 +68,7 @@ public partial class SettingsController : Control
 
 	private void ClosePanel()
 	{
+		AudioManager.Instance.PlaySFX("click");
 		Visible = false;
 
 		if (IsInGame)
@@ -75,18 +77,9 @@ public partial class SettingsController : Control
 		}
 	}
 
-	private void OnBGMChanged(double value)
-	{
-		AudioManager.Instance.SetBGMVolume((float)value);
-	}
-
-	private void OnSFXChanged(double value)
-	{
-		AudioManager.Instance.SetSFXVolume((float)value);
-	}
-
 	private void OnQuitPressed()
 	{
+		AudioManager.Instance.PlaySFX("click");
 		GetTree().Paused = false;
 
 		if (SceneManager.Instance != null)
